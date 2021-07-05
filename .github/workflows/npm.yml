@@ -21,8 +21,7 @@ jobs:
         npm run build
     - name: Publish tag to npm
       if: contains(github.ref, 'tags')
-      run: |
-        npm publish
+      run: npm publish --access=public
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 

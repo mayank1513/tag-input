@@ -1,6 +1,6 @@
 {
-    "name": "@mayank1513/tag-input",
-    "description": "A versetile tag input component built with Vue 3 Composition API",
+    "name": "@mayank1513/vue-tag-input",
+    "description": "A versatile tag input component built with Vue 3 Composition API",
     "version": "0.0.1",
     "main": "dist/TagInput.umd.min.js",
     "browser": {
