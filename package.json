@@ -32,6 +32,7 @@
     "scripts": {
         "serve": "vue-cli-service serve",
         "build": "vue-cli-service build --target lib --name TagInput src/components/TagInput.vue",
+        "build:web": "vue-cli-service build --target wc --inline-vue --name TagInput src/components/TagInput.vue",
         "build:all": "npm run build:umd & npm run build:es & npm run build:unpkg",
         "build:example": "vue-cli-service build",
         "build:umd": "rollup --config rollup.config.js --format umd --file dist/tag-input.umd.js",
