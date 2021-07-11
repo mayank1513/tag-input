@@ -1,7 +1,7 @@
 {
     "name": "@mayank1513/vue-tag-input",
     "description": "A versatile tag input component built with Vue 3 Composition API",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "main": "dist/TagInput.umd.min.js",
     "browser": {
         "./sfc": "src/components/TagInput.vue"
