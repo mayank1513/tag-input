@@ -10,7 +10,7 @@ To learn vue js please check out our courses [Vue.js Complete Course + Guide](ht
 
 Follow us on [FaceBook](https://www.facebook.com/Learn-Vue-Js-104953725168718/) to get the latest discount coupons and update to our articles and packages.
 
-> To keep it thin and performant we have chosen to provide only the minified version. Because, that's what you really need. In case you are looking for the full version build your own from this source code as per [Build](/#Build) section.
+> To keep it thin and performant we have chosen to provide only the minified version. Because, that's what you really need. In case you are looking for the full version build your own from this source code as per [Build](#Build) section.
 
 ## [live demo](https://mayank1513.github.io/tag-input/demo.html)
 ## Install
