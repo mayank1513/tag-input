@@ -4,26 +4,32 @@
 
 A versetile tag input component built with Vue 3 Composition API.
 
-[live demo](https://mayank1513.github.io/tag-input/demo.html)
+Please read [this article](https://javascript.plainenglish.io/building-a-tag-input-component-with-the-vue-3-composition-api-c5d20dcbe3) to learn how to build this package step by step and the background story.
 
-> Please checkout our [Vue JS course](https://www.udemy.com/course/vuejs-complete-course-plus-guide/?referralCode=93BDA4A1FE3F73C37CD2![image](https://user-images.githubusercontent.com/25501269/124417288-71335100-dd76-11eb-94d7-5138b38b9437.png)
-)
-> Use code HAPPY_LEARNING or get in touch for additional discounts 
+To learn vue js please check out our courses [Vue.js Complete Course + Guide](https://www.udemy.com/course/vuejs-complete-course-plus-guide/?referralCode=93BDA4A1FE3F73C37CD2) and [Vue 3 Essentials](https://www.udemy.com/course/vue-3-essentials/?referralCode=E6D2FDE2B8B06C1991F1)
 
+Follow us on [FaceBook](https://www.facebook.com/Learn-Vue-Js-104953725168718/) to get the latest discount coupons and update to our articles and packages.
+
+> To keep it thin and performant we have chosen to provide only the minified version. Because, that's what you really need. In case you are looking for the full version build your own from this source code as per [Build](/#Build) section.
+
+## [live demo](https://mayank1513.github.io/tag-input/demo.html)
 ## Install
 ### npm
 ```
-npm i @mayank1513/tag-input
+npm i @mayank1513/vue-tag-input --production
 ```
 or
 ```
-pnpm i @mayank1513/tag-input
+pnpm i @mayank1513/vue-tag-input --production
 ```
 or
 ```
-yarn add @mayank1513/tag-input
+yarn add @mayank1513/vue-tag-input --production
 ```
-
+Add dependency in package.json 
+```
+    "@mayank1513/vue-tag-input": "^0.0.3"
+```
 ### cdn
 ```
     <script src="https://unpkg.com/vue@3.0.11"></script>
@@ -106,7 +112,7 @@ advanced usage
     <title>Document</title>
     <script src="https://unpkg.com/vue@3.0.11"></script>
     <script src="https://unpkg.com/@mayank1513/vue-tag-input"></script>
-    <link rel="stylesheet" href="https://unpkg.com/@mayank1513/vue-tag-input@0.0.1/dist/TagInput.css">
+    <link rel="stylesheet" href="https://unpkg.com/@mayank1513/vue-tag-input@0.0.3/dist/TagInput.css">
     <style>
         #app {
             font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -182,3 +188,32 @@ advanced usage
 
 </html>
 ```
+## Build
+To build the example clone the repo `git clone https://github.com/mayank1513/tag-input.git` and run
+
+```
+npm i && npm run build
+// or
+pnpm i && npm run build 
+```
+## Help us to help you more
+- Please start this repo
+- Follow us on [FaceBook](https://www.facebook.com/Learn-Vue-Js-104953725168718/)
+- Upvote our helpful posts on [StackOverflow](https://stackoverflow.com/users/story/9640177)
+- Refer our courses to your colleagues, friends and business leaders
+  - [Vue.js Complete Course + Guide](https://www.udemy.com/course/vuejs-complete-course-plus-guide/?referralCode=93BDA4A1FE3F73C37CD2)
+  - [Vue 3 Essentials](https://www.udemy.com/course/vue-3-essentials/?referralCode=E6D2FDE2B8B06C1991F1)
+- Use our referrals to get advantage of special offers
+  - Learn [organic marketing](https://leads-arc.web.app/) 
+  - Open your free demat account with [Groww](https://groww.app.link/refe/mayank-kumar8914309)
+  - Open your demat account with leading discount broker [Zerodha](https://zerodha.com/?c=GG0215&s=CONSOLE)
+  - Buy what you need on [amzon.in](https://www.amazon.in/ref=assoc_aax_fallback_300x250?tag=mayank1513-21&linkCode=ur8) using [our refferal](https://www.amazon.in/ref=assoc_aax_fallback_300x250?tag=mayank1513-21&linkCode=ur8)
+  - Buy what you need on [amazon.com](https://amzn.to/3i2PPsE)
+  - Donate for social cause. We are happy if you help anyone in need. It need not be only us!
+- Want to learn business skills? Checkout [Bada Business](https://www.badabusiness.com/dd/BIMK003866)
+
+## Contribute for a Cause
+- [PM Cares Fund](https://www.pmcares.gov.in/en/)
+- [#IamOxygenMan](https://www.badabusiness.com/IamOxygenMan)
+
+

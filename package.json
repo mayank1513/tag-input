@@ -1,7 +1,7 @@
 {
     "name": "@mayank1513/vue-tag-input",
     "description": "A versatile tag input component built with Vue 3 Composition API",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "main": "dist/TagInput.umd.min.js",
     "browser": {
         "./sfc": "src/components/TagInput.vue"
@@ -31,10 +31,10 @@
     "author": "Mayank Chaudhari <mayank.srmu@gmail.com>",
     "scripts": {
         "serve": "vue-cli-service serve",
-        "build": "vue-cli-service build --target lib --name TagInput src/components/TagInput.vue",
+        "build:lib": "vue-cli-service build --target lib --name TagInput src/components/TagInput.vue",
         "build:web": "vue-cli-service build --target wc --inline-vue --name TagInput src/components/TagInput.vue",
         "build:all": "npm run build:umd & npm run build:es & npm run build:unpkg",
-        "build:example": "vue-cli-service build",
+        "build": "vue-cli-service build",
         "build:umd": "rollup --config rollup.config.js --format umd --file dist/tag-input.umd.js",
         "build:es": "rollup --config rollup.config.js --format es --file dist/tag-input.esm.js",
         "build:unpkg": "rollup --config rollup.config.js --format iife --file dist/tag-input.min.js",
@@ -70,6 +70,7 @@
         }
     },
     "files": [
-        "dist/*"
+        "dist/TagInput.umd.min.js",
+        "dist/TagInput.css"
     ]
 }
