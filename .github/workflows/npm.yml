@@ -18,7 +18,7 @@ jobs:
     - name: Test and build package
       run: |
         npm test
-        npm run build
+        npm run build:lib
     - name: Publish tag to npm
       if: contains(github.ref, 'tags')
       run: npm publish --access=public
