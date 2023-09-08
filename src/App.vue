@@ -1,3 +1,14 @@
+<script setup lang="ts">
+// import TagInput from '@mayank1513/tag-input'
+// import '@mayank1513/tag-input/dist/TagInput.css'
+import { ref } from 'vue';
+import TagInput from './components/TagInput.vue'
+
+const tags = ref<string[]>([]);
+const customDelimiter = ref<string[] | string>([',', ' '])
+const options = ref<string[]>(['vue', 'composition', 'js', 'mytag1', 'mayank1513'])
+</script>
+
 <template>
   <img class="logo" alt="Krishna Apps logo" src="./assets/logo.png" />
   <br />
@@ -33,26 +44,6 @@
     <br>
   </div>
 </template>
-
-<script>
-// import TagInput from '@mayank1513/tag-input'
-// import '@mayank1513/tag-input/dist/TagInput.css'
-import TagInput from './components/TagInput.vue'
-
-export default {
-  name: 'App',
-  data() {
-    return {
-      tags: [],
-      customDelimiter: [',', ' '],
-      options: ['vue', 'composition', 'js', 'mytag1', 'mayank1513']
-    };
-  },
-  components: {
-    TagInput
-  }
-}
-</script>
 
 <style>
 #app {

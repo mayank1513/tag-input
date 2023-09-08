@@ -1,5 +1,121 @@
+<script setup lang="ts">
+import { ref, watch, nextTick, onMounted, computed } from "vue";
+
+export interface TagInputProps {
+  name: string;
+  modelValue: string[];
+  options: string[];
+  allowCustom: boolean;
+  showCount: boolean;
+  tagTextColor: string;
+  tagBgColor: string;
+  tagClass: string;
+  customDelimiter: string[] | string;
+}
+
+const props = withDefaults(defineProps<TagInputProps>(), {
+  name: "",
+  modelValue: () => [],
+  options: () => [],
+  allowCustom: true,
+  showCount: false,
+  tagTextColor: "white",
+  tagBgColor: "rgb(250, 104, 104)",
+  tagClass: "",
+  customDelimiter: () => [],
+  // validator: (val: string[] | string) => {
+  //   if (typeof val == "string") return val.length == 1;
+  //   for (let i = 0; i < val.length; i++) {
+  //     if (typeof val[i] != "string" || val[i].length != 1) return false;
+  //   }
+  //   return true;
+  // },
+});
+const emit = defineEmits(["update:modelValue"]);
+// Tags
+const tags = ref<string[]>(props.modelValue);
+const tagsClass = ref(props.tagClass);
+const newTag = ref("");
+const id = Math.random().toString(36).substring(7);
+const customDelimiter: string[] | string = [
+  ...new Set(
+    (typeof props.customDelimiter == "string"
+      ? [props.customDelimiter]
+      : props.customDelimiter
+    ).filter((delimeter: string) => delimeter.length == 1)
+  ),
+];
+
+// handling duplicates
+const duplicate = ref<string | null>(null);
+const handleDuplicate = (tag: string) => {
+  duplicate.value = tag;
+  setTimeout(() => (duplicate.value = null), 1000);
+  newTag.value = "";
+};
+const noMatchingTag = ref(false);
+function handleNoMatchingTag() {
+  noMatchingTag.value = true;
+  setTimeout(() => (noMatchingTag.value = false), 500);
+  let v = newTag.value;
+  if (customDelimiter.includes(v.charAt(v.length - 1)))
+    newTag.value = v.substr(0, v.length - 1);
+}
+const addTag = (tag: string) => {
+  tag = tag.trim();
+  if (!tag) return; // prevent empty tag
+  // only allow predefined tags when allowCustom is false
+  if (!props.allowCustom && !props.options.includes(tag)) {
+    //   display not a valid tag
+    handleNoMatchingTag();
+    return;
+  }
+  // return early if duplicate
+  if (tags.value.includes(tag)) {
+    handleDuplicate(tag);
+    return;
+  }
+  tags.value.push(tag);
+  newTag.value = ""; // reset newTag
+};
+const addTagIfDelem = (tag: string) => {
+  if (!customDelimiter || customDelimiter.length == 0) return;
+  if (customDelimiter.includes(tag.charAt(tag.length - 1)))
+    addTag(tag.substr(0, tag.length - 1));
+};
+const removeTag = (index: number) => {
+  tags.value.splice(index, 1);
+};
+
+// positioning and handling tag change
+const paddingLeft = ref(10);
+const tagsUl = ref<HTMLUListElement | null>(null);
+const onTagsChange = () => {
+  // position cursor
+  const extraCushion = 15;
+  tagsUl.value?.style.setProperty("--tagBgColor", props.tagBgColor);
+  tagsUl.value?.style.setProperty("--tagTextColor", props.tagTextColor);
+  paddingLeft.value = (tagsUl.value?.clientWidth || 0) + extraCushion;
+  // scroll to end of tags
+  tagsUl.value?.scrollTo(tagsUl.value.scrollWidth, 0);
+  // emit value on tags change
+  emit("update:modelValue", tags.value);
+};
+watch(tags, () => nextTick(onTagsChange), { deep: true });
+onMounted(onTagsChange);
+
+// options
+const availableOptions = computed(() => {
+  if (!props.options) return false;
+  return props.options.filter((option) => !tags.value.includes(option));
+});
+</script>
+
 <template>
-  <div class="tag-input" :class="{ 'with-count': showCount, duplicate: noMatchingTag }">
+  <div
+    class="tag-input"
+    :class="{ 'with-count': showCount, duplicate: noMatchingTag }"
+  >
     <input
       v-model="newTag"
       type="text"
@@ -38,129 +154,6 @@
   </div>
   <small v-show="noMatchingTag" class="err">Custom tags not allowed</small>
 </template>
-
-<script>
-import { ref, watch, nextTick, onMounted, computed } from "vue";
-
-export default {
-  name: "TagInput",
-  props: {
-    name: { type: String, default: "" },
-    modelValue: { type: Array, default: () => [] },
-    options: { type: Array, default: () => [] },
-    allowCustom: { type: Boolean, default: true },
-    showCount: { type: Boolean, default: false },
-    tagTextColor: { type: String, default: "white" },
-    tagBgColor: { type: String, default: "rgb(250, 104, 104)" },
-    tagClass: { type: String, default: "" },
-    customDelimiter: {
-      type: [String, Array],
-      default: () => [],
-      validator: (val) => {
-        if (typeof val == "string") return val.length == 1;
-        for (let i = 0; i < val.length; i++) {
-          if (typeof val[i] != "string" || val[i].length != 1) return false;
-        }
-        return true;
-      },
-    },
-  },
-  setup(props, { emit }) {
-    // Tags
-    const tags = ref(props.modelValue);
-    const tagsClass = ref(props.tagClass);
-    const newTag = ref("");
-    const id = Math.random().toString(36).substring(7);
-    const customDelimiter = [
-      ...new Set(
-        (typeof props.customDelimiter == "string"
-          ? [props.customDelimiter]
-          : props.customDelimiter
-        ).filter((it) => it.length == 1)
-      ),
-    ];
-
-    // handling duplicates
-    const duplicate = ref(null);
-    const handleDuplicate = (tag) => {
-      duplicate.value = tag;
-      setTimeout(() => (duplicate.value = null), 1000);
-      newTag.value = "";
-    };
-    const noMatchingTag = ref(false);
-    function handleNoMatchingTag() {
-      noMatchingTag.value = true;
-      setTimeout(() => (noMatchingTag.value = false), 500);
-      let v = newTag.value;
-      if (customDelimiter.includes(v.charAt(v.length - 1)))
-        newTag.value = v.substr(0, v.length - 1);
-    }
-    const addTag = (tag) => {
-      tag = tag.trim();
-      if (!tag) return; // prevent empty tag
-      // only allow predefined tags when allowCustom is false
-      if (!props.allowCustom && !props.options.includes(tag)) {
-        //   display not a valid tag
-        handleNoMatchingTag();
-        return;
-      }
-      // return early if duplicate
-      if (tags.value.includes(tag)) {
-        handleDuplicate(tag);
-        return;
-      }
-      tags.value.push(tag);
-      newTag.value = ""; // reset newTag
-    };
-    const addTagIfDelem = (tag) => {
-      if (!customDelimiter || customDelimiter.length == 0) return;
-      if (customDelimiter.includes(tag.charAt(tag.length - 1)))
-        addTag(tag.substr(0, tag.length - 1));
-    };
-    const removeTag = (index) => {
-      tags.value.splice(index, 1);
-    };
-
-    // positioning and handling tag change
-    const paddingLeft = ref(10);
-    const tagsUl = ref(null);
-    const onTagsChange = () => {
-      // position cursor
-      const extraCushion = 15;
-      tagsUl.value.style.setProperty("--tagBgColor", props.tagBgColor);
-      tagsUl.value.style.setProperty("--tagTextColor", props.tagTextColor);
-      paddingLeft.value = tagsUl.value.clientWidth + extraCushion;
-      // scroll to end of tags
-      tagsUl.value.scrollTo(tagsUl.value.scrollWidth, 0);
-      // emit value on tags change
-      emit("update:modelValue", tags.value);
-    };
-    watch(tags, () => nextTick(onTagsChange), { deep: true });
-    onMounted(onTagsChange);
-
-    // options
-    const availableOptions = computed(() => {
-      if (!props.options) return false;
-      return props.options.filter((option) => !tags.value.includes(option));
-    });
-
-    return {
-      tags,
-      tagsClass,
-      newTag,
-      addTag,
-      addTagIfDelem,
-      removeTag,
-      paddingLeft,
-      tagsUl,
-      availableOptions,
-      id,
-      duplicate,
-      noMatchingTag
-    };
-  },
-};
-</script>
 
 <style scoped>
 * {
@@ -210,10 +203,10 @@ ul {
   animation: shake 1s;
 }
 
-.duplicate input{
+.duplicate input {
   outline: rgb(235, 27, 27);
   border: 1px solid rgb(235, 27, 27);
-  animation: shake1 .5s;
+  animation: shake1 0.5s;
 }
 
 input {
