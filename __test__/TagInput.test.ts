@@ -31,6 +31,12 @@ describe.concurrent("TagInput", () => {
 
   test("Do not allow custom tags", async ({ expect }) => {
     await wrapper.setProps({ allowCustom: false, options: ["tag1", "tag2"] });
+    input.setValue("tag1");
+    input.trigger("keydown", { key: "tab" });
+    expect(wrapper.props("modelValue")).toStrictEqual(["tag1"]);
+    input.setValue("NotInOption");
+    input.trigger("keydown", { key: "enter" });
+    expect(wrapper.props("modelValue")).toStrictEqual(["tag1"]);
   });
 
   test.todo("Custom Delimiter", async ({ expect }) => {
