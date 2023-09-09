@@ -77,6 +77,7 @@ const options = ref<string[]>([
       tagTextColor="lightblue"
       :customDelimiter="customDelimiter"
       v-model="tags"
+      :showCount="true"
     />
     <br />
     <span

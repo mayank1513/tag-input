@@ -2,19 +2,17 @@
 import { ref, watch, nextTick, onMounted, computed } from "vue";
 
 export interface TagInputProps {
-  name: string;
   modelValue: string[];
-  options: string[];
-  allowCustom: boolean;
-  showCount: boolean;
-  tagTextColor: string;
-  tagBgColor: string;
-  tagClass: string;
-  customDelimiter: string[] | string;
+  options?: string[];
+  allowCustom?: boolean;
+  showCount?: boolean;
+  tagTextColor?: string;
+  tagBgColor?: string;
+  tagClass?: string;
+  customDelimiter?: string[] | string;
 }
 
 const props = withDefaults(defineProps<TagInputProps>(), {
-  name: "",
   modelValue: () => [],
   options: () => [],
   allowCustom: true,
@@ -23,13 +21,6 @@ const props = withDefaults(defineProps<TagInputProps>(), {
   tagBgColor: "rgb(250, 104, 104)",
   tagClass: "",
   customDelimiter: () => [],
-  // validator: (val: string[] | string) => {
-  //   if (typeof val == "string") return val.length == 1;
-  //   for (let i = 0; i < val.length; i++) {
-  //     if (typeof val[i] != "string" || val[i].length != 1) return false;
-  //   }
-  //   return true;
-  // },
 });
 const emit = defineEmits(["update:modelValue"]);
 // Tags
@@ -37,14 +28,14 @@ const tags = ref<string[]>(props.modelValue);
 const tagsClass = ref(props.tagClass);
 const newTag = ref("");
 const id = Math.random().toString(36).substring(7);
-const customDelimiter: string[] | string = [
+const customDelimiter = computed<string[] | string>(() => [
   ...new Set(
     (typeof props.customDelimiter == "string"
-      ? [props.customDelimiter]
+      ? props.customDelimiter.split("")
       : props.customDelimiter
-    ).filter((delimeter: string) => delimeter.length == 1)
+    ).flatMap((delim) => delim.split(""))
   ),
-];
+]);
 
 // handling duplicates
 const duplicate = ref<string | null>(null);
@@ -58,8 +49,8 @@ function handleNoMatchingTag() {
   noMatchingTag.value = true;
   setTimeout(() => (noMatchingTag.value = false), 500);
   let v = newTag.value;
-  if (customDelimiter.includes(v.charAt(v.length - 1)))
-    newTag.value = v.substr(0, v.length - 1);
+  if (customDelimiter.value.includes(v.charAt(v.length - 1)))
+    newTag.value = v.slice(0, v.length - 1);
 }
 const addTag = (tag: string) => {
   tag = tag.trim();
@@ -79,9 +70,9 @@ const addTag = (tag: string) => {
   newTag.value = ""; // reset newTag
 };
 const addTagIfDelem = (tag: string) => {
-  if (!customDelimiter || customDelimiter.length == 0) return;
-  if (customDelimiter.includes(tag.charAt(tag.length - 1)))
-    addTag(tag.substr(0, tag.length - 1));
+  if (!customDelimiter.value || customDelimiter.value.length == 0) return;
+  if (customDelimiter.value.includes(tag.charAt(tag.length - 1)))
+    addTag(tag.slice(0, tag.length - 1));
 };
 const removeTag = (index: number) => {
   tags.value.splice(index, 1);

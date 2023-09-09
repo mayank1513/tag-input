@@ -18,7 +18,8 @@
     "dev": "vite --port 3000 --open",
     "build": "rm -rf dist vue-tsc && vite build",
     "build:lib": "vite build -c vite-lib.config.ts && vue-tsc --noEmit false --emitDeclarationOnly && node touchup.js",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest run --coverage"
   },
   "dependencies": {
     "vue": "^3.3.4"
@@ -26,8 +27,12 @@
   "devDependencies": {
     "@types/node": "^20.6.0",
     "@vitejs/plugin-vue": "^4.3.4",
+    "@vitest/coverage-v8": "^0.34.4",
+    "@vue/test-utils": "^2.4.1",
+    "happy-dom": "^11.0.2",
     "typescript": "^5.2.2",
     "vite": "^4.4.9",
+    "vitest": "^0.34.4",
     "vue-tsc": "^1.8.10"
   },
   "peerDependencies": {
