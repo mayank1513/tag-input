@@ -2,7 +2,7 @@
 
 A versetile tag input component built with Vue 3 Composition API.
 
-[![Version](https://img.shields.io/npm/v/@mayank1513/vue-tag-input.svg?colorB=green)](https://www.npmjs.com/package/@mayank1513/vue-tag-input) [![codecov](https://codecov.io/gh/mayank1513/tag-input/graph/badge.svg)](https://codecov.io/gh/mayank1513/tag-input) [![Downloads](https://img.jsdelivr.com/img.shields.io/npm/dt/@mayank1513/vue-tag-input.svg)](https://www.npmjs.com/package/@mayank1513/vue-tag-input) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@mayank1513/vue-tag-input)](https://www.npmjs.com/package/@mayank1513/vue-tag-input) [![Publish to npm and GitHub](https://github.com/mayank1513/tag-input/actions/workflows/test.yml/badge.svg)](https://github.com/mayank1513/tag-input/actions/workflows/publish-to-npm-on-new-release.yml) [![Contact me on Codementor](https://www.codementor.io/m-badges/mayank1513/get-help.svg)](https://www.codementor.io/@mayank1513?refer=badge)
+[![Version](https://img.shields.io/npm/v/@mayank1513/vue-tag-input.svg?colorB=green)](https://www.npmjs.com/package/@mayank1513/vue-tag-input) [![codecov](https://codecov.io/gh/mayank1513/tag-input/graph/badge.svg)](https://codecov.io/gh/mayank1513/tag-input) [![Downloads](https://img.jsdelivr.com/img.shields.io/npm/dt/@mayank1513/vue-tag-input.svg)](https://www.npmjs.com/package/@mayank1513/vue-tag-input) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@mayank1513/vue-tag-input)](https://www.npmjs.com/package/@mayank1513/vue-tag-input) [![Publish to npm and GitHub](https://github.com/mayank1513/tag-input/actions/workflows/test.yml/badge.svg)](https://github.com/mayank1513/tag-input/actions/workflows/publish-to-npm-on-new-release.yml) [![Get help](codementor.svg)](https://www.codementor.io/@mayank1513?refer=badge)
 
 ![tag-input.gif](tag-input.gif)
 
@@ -286,3 +286,13 @@ pnpm i && npm run build
 
 - [PM Cares Fund](https://www.pmcares.gov.in/en/)
 - [#IamOxygenMan](https://www.badabusiness.com/IamOxygenMan)
+
+![Alt](https://repobeats.axiom.co/api/embed/d45ed140b02466d208243ea6c6773d2a86655eb3.svg "Repobeats analytics image")
+
+## License
+
+Licensed as MIT open source.
+
+<hr />
+
+<p align="center" style="text-align:center">with 💖 by <a href="https://mayank-chaudhari.vercel.app" target="_blank">Mayank Kumar Chaudhari</a></p>
