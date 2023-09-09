@@ -50,7 +50,7 @@ function handleNoMatchingTag() {
   setTimeout(() => (noMatchingTag.value = false), 500);
   let v = newTag.value;
   if (customDelimiter.includes(v.charAt(v.length - 1)))
-    newTag.value = v.substr(0, v.length - 1);
+    newTag.value = v.slice(0, v.length - 1);
 }
 const addTag = (tag: string) => {
   tag = tag.trim();
@@ -72,7 +72,7 @@ const addTag = (tag: string) => {
 const addTagIfDelem = (tag: string) => {
   if (!customDelimiter || customDelimiter.length == 0) return;
   if (customDelimiter.includes(tag.charAt(tag.length - 1)))
-    addTag(tag.substr(0, tag.length - 1));
+    addTag(tag.slice(0, tag.length - 1));
 };
 const removeTag = (index: number) => {
   tags.value.splice(index, 1);
