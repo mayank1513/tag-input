@@ -30,7 +30,11 @@ describe.concurrent("TagInput", () => {
   });
 
   test("Restrict tags to options provided", async ({ expect }) => {
-    await wrapper.setProps({ allowCustom: false, options: ["tag1", "tag2"] });
+    await wrapper.setProps({
+      allowCustom: false,
+      options: ["tag1", "tag2"],
+      showCount: true,
+    });
     input.setValue("tag1");
     input.trigger("keydown", { key: "tab" });
     expect(wrapper.props("modelValue")).toStrictEqual(["tag1"]);
@@ -47,11 +51,19 @@ describe.concurrent("TagInput", () => {
     expect(wrapper.props("modelValue")).toStrictEqual([]);
   });
 
-  test.todo("Custom Delimiter", async ({ expect }) => {
+  test("Custom Delimiter", async ({ expect }) => {
     await wrapper.setProps({ customDelimiter: [",;", ":"] });
     input.setValue("Tag1,");
-    expect(input.element.value).toStrictEqual("Tag1,");
+    expect(wrapper.props("modelValue")).toStrictEqual(["Tag1"]);
     input.setValue("Tag2;");
-    expect(input.element.value).toStrictEqual("Tag2;");
+    expect(wrapper.props("modelValue")).toStrictEqual(["Tag1", "Tag2"]);
+  });
+
+  test("Custom Delimiter as a string", async ({ expect }) => {
+    await wrapper.setProps({ customDelimiter: ",;" });
+    input.setValue("Tag1,");
+    expect(wrapper.props("modelValue")).toStrictEqual(["Tag1"]);
+    input.setValue("Tag2;");
+    expect(wrapper.props("modelValue")).toStrictEqual(["Tag1", "Tag2"]);
   });
 });
