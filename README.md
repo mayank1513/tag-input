@@ -1,8 +1,10 @@
-# TagInput [![Version](https://img.shields.io/npm/v/@mayank1513/vue-tag-input.svg?colorB=green)](https://www.npmjs.com/package/@mayank1513/vue-tag-input) [![codecov](https://codecov.io/gh/mayank1513/tag-input/graph/badge.svg)](https://codecov.io/gh/mayank1513/tag-input) [![Downloads](https://img.jsdelivr.com/img.shields.io/npm/dt/@mayank1513/vue-tag-input.svg)](https://www.npmjs.com/package/@mayank1513/vue-tag-input) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@mayank1513/vue-tag-input)](https://www.npmjs.com/package/@mayank1513/vue-tag-input) [![Publish to npm and GitHub](https://github.com/mayank1513/tag-input/actions/workflows/test.yml/badge.svg)](https://github.com/mayank1513/tag-input/actions/workflows/publish-to-npm-on-new-release.yml) [![Contact me on Codementor](https://www.codementor.io/m-badges/mayank1513/get-help.svg)](https://www.codementor.io/@mayank1513?refer=badge)
-
-![tag-input.gif](tag-input.gif)
+# TagInput
 
 A versetile tag input component built with Vue 3 Composition API.
+
+[![Version](https://img.shields.io/npm/v/@mayank1513/vue-tag-input.svg?colorB=green)](https://www.npmjs.com/package/@mayank1513/vue-tag-input) [![codecov](https://codecov.io/gh/mayank1513/tag-input/graph/badge.svg)](https://codecov.io/gh/mayank1513/tag-input) [![Downloads](https://img.jsdelivr.com/img.shields.io/npm/dt/@mayank1513/vue-tag-input.svg)](https://www.npmjs.com/package/@mayank1513/vue-tag-input) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@mayank1513/vue-tag-input)](https://www.npmjs.com/package/@mayank1513/vue-tag-input) [![Publish to npm and GitHub](https://github.com/mayank1513/tag-input/actions/workflows/test.yml/badge.svg)](https://github.com/mayank1513/tag-input/actions/workflows/publish-to-npm-on-new-release.yml) [![Contact me on Codementor](https://www.codementor.io/m-badges/mayank1513/get-help.svg)](https://www.codementor.io/@mayank1513?refer=badge)
+
+![tag-input.gif](tag-input.gif)
 
 Please read [this article](https://javascript.plainenglish.io/building-a-tag-input-component-with-the-vue-3-composition-api-c5d20dcbe3) to learn how to build this package step by step and the background story.
 
@@ -18,50 +20,44 @@ Follow us on [FaceBook](https://www.facebook.com/Learn-Vue-Js-104953725168718/) 
 
 ### npm
 
-```
+```bash
 npm i @mayank1513/vue-tag-input --production
 ```
 
 or
 
-```
+```bash
 pnpm i @mayank1513/vue-tag-input --production
 ```
 
 or
 
-```
+```bash
 yarn add @mayank1513/vue-tag-input --production
-```
-
-Add dependency in package.json
-
-```
-    "@mayank1513/vue-tag-input": "^0.0.3"
 ```
 
 ### cdn
 
 ```
-    <script src="https://unpkg.com/vue@3.0.11"></script>
-    <script src="https://unpkg.com/@mayank1513/tag-input"></script>
-    <link rel="stylesheet" href="https://unpkg.com/@mayank1513/tag-input@0.1.2/dist/TagInput.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/@mayank1513/vue-tag-input"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@mayank1513/vue-tag-input@1.0.0/dist/style.css">
 ```
 
 ## Usage
 
 ### npm
 
-```
+```vue
 <template>
-    ...
-    <tag-input v-model="tags" />
-    ...
+  ...
+  <tag-input v-model="tags" />
+  ...
 </template>
 
 <script>
-import TagInput from '@mayank1513/tag-input'
-import '@mayank1513/tag-input/dist/TagInput.css'
+import TagInput from '@mayank1513/vue-tag-input'
+import '@mayank1513/vue-tag-input/style.css'
 ...
 
 export default {
@@ -85,123 +81,178 @@ export default {
 
 basic usage
 
-```
+```html
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Tag Input Demo</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/@mayank1513/vue-tag-input"></script>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@mayank1513/vue-tag-input@1.0.0/style.css"
+    />
+  </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://unpkg.com/vue@3.0.11"></script>
-    <script src="https://unpkg.com/@mayank1513/tag-input"></script>
-    <link rel="stylesheet" href="https://unpkg.com/@mayank1513/tag-input@0.1.2/dist/TagInput.css">
-</head>
-
-<body>
+  <body>
     <div id="app">
-        <tag-input></tag-input>
+      <tag-input></tag-input>
     </div>
-</body>
-<script>
+  </body>
+  <script>
     Vue.createApp({
-        components: {
-            TagInput
-        }
-    }).mount('#app')
-</script>
-
+      components: {
+        TagInput,
+      },
+    }).mount("#app");
+  </script>
 </html>
 ```
 
-advanced usage
+#### advanced usage
 
-```
+```html
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <script src="https://unpkg.com/vue@3.0.11"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://unpkg.com/@mayank1513/vue-tag-input"></script>
-    <link rel="stylesheet" href="https://unpkg.com/@mayank1513/vue-tag-input@0.0.3/dist/TagInput.css">
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@mayank1513/vue-tag-input@1.0.0/style.css"
+    />
     <style>
-        #app {
-            font-family: Avenir, Helvetica, Arial, sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-align: center;
-            color: #2c3e50;
-            margin-top: 60px;
-            max-width: 1400px;
-            margin: auto;
-        }
+      #app {
+        font-family: Avenir, Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-align: center;
+        color: #2c3e50;
+        margin-top: 60px;
+        max-width: 1400px;
+        margin: auto;
+      }
 
-        .main {
-            text-align: start;
-        }
+      .main {
+        text-align: start;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="app">
-        <img class="logo" alt="Krishna Apps logo" src="https://raw.githubusercontent.com/mayank1513/tag-input/master/src/assets/logo.png" />
+      <img
+        class="logo"
+        alt="Krishna Apps logo"
+        src="https://raw.githubusercontent.com/mayank1513/tag-input/master/src/assets/logo.png"
+      />
+      <br />
+      <h2>Presents</h2>
+      <h1>Vue Tag Input</h1>
+      <hr />
+      <div class="main">
+        <h1>Default options</h1>
+        <tag-input v-model="tags" />
         <br />
-        <h2>Presents</h2>
-        <h1>Vue Tag Input</h1>
-        <hr />
-        <div class="main">
-            <h1>Default options</h1>
-            <tag-input v-model="tags" />
-            <br />
-            <span>Use <code>enter</code> key or <code>tab</code> key to create a new tag.</span>
-            <h1>With custom delimiter and colors</h1>
-            <tag-input tagBgColor="lightgreen" tagTextColor="darkgreen" :customDelimiter="customDelimiter" v-model="tags" />
-            <br>
-            <span>Use <code>enter</code> key or <code>tab</code> key or any of the custom delimeters to create a new
-                tag.</span>
-            <p>Custom delimiters: <code v-for="delim in customDelimiter" :key="delim"> "{{delim}}"</code></p>
-            <br>
-            <h1>Do not allow custom tags</h1>
-            <tag-input :options="options" :allowCustom="false" tagBgColor="blue" tagTextColor="lightblue" :customDelimiter="customDelimiter" v-model="tags" />
-            <br> Try entering tag that is not in options and hit <code>enter</code>
-            <br>
-            <span>Use <code>enter</code> key or <code>tab</code> key or any of the custom delimeters to create a new
-                tag.</span>
-            <p>Allowed Tags: <code v-for="tag in options" :key="tag"> "{{tag}}"</code></p>
-            <p>Custom delimiters: <code v-for="delim in customDelimiter" :key="delim"> "{{delim}}"</code></p>
-            <br>
-            <h1>Provide options for autofill but also allow custom tags</h1>
-            <tag-input :options="options" tagBgColor="blue" tagTextColor="lightblue" :customDelimiter="customDelimiter" v-model="tags" />
-            <br>
-            <span>Use <code>enter</code> key or <code>tab</code> key or any of the custom delimeters to create a new
-                tag.</span>
-            <p>Allowed Tags: <code v-for="tag in options" :key="tag"> "{{tag}}"</code></p>
-            <p>Custom delimiters: <code v-for="delim in customDelimiter" :key="delim"> "{{delim}}"</code></p>
-            <br>
-        </div>
+        <span
+          >Use <code>enter</code> key or <code>tab</code> key to create a new
+          tag.</span
+        >
+        <h1>With custom delimiter and colors</h1>
+        <tag-input
+          tagBgColor="lightgreen"
+          tagTextColor="darkgreen"
+          :customDelimiter="customDelimiter"
+          v-model="tags"
+        />
+        <br />
+        <span
+          >Use <code>enter</code> key or <code>tab</code> key or any of the
+          custom delimeters to create a new tag.</span
+        >
+        <p>
+          Custom delimiters:
+          <code v-for="delim in customDelimiter" :key="delim">
+            "{{delim}}"</code
+          >
+        </p>
+        <br />
+        <h1>Do not allow custom tags</h1>
+        <tag-input
+          :options="options"
+          :allowCustom="false"
+          tagBgColor="blue"
+          tagTextColor="lightblue"
+          :customDelimiter="customDelimiter"
+          v-model="tags"
+        />
+        <br />
+        Try entering tag that is not in options and hit <code>enter</code>
+        <br />
+        <span
+          >Use <code>enter</code> key or <code>tab</code> key or any of the
+          custom delimeters to create a new tag.</span
+        >
+        <p>
+          Allowed Tags:
+          <code v-for="tag in options" :key="tag"> "{{tag}}"</code>
+        </p>
+        <p>
+          Custom delimiters:
+          <code v-for="delim in customDelimiter" :key="delim">
+            "{{delim}}"</code
+          >
+        </p>
+        <br />
+        <h1>Provide options for autofill but also allow custom tags</h1>
+        <tag-input
+          :options="options"
+          tagBgColor="blue"
+          tagTextColor="lightblue"
+          :customDelimiter="customDelimiter"
+          v-model="tags"
+        />
+        <br />
+        <span
+          >Use <code>enter</code> key or <code>tab</code> key or any of the
+          custom delimeters to create a new tag.</span
+        >
+        <p>
+          Allowed Tags:
+          <code v-for="tag in options" :key="tag"> "{{tag}}"</code>
+        </p>
+        <p>
+          Custom delimiters:
+          <code v-for="delim in customDelimiter" :key="delim">
+            "{{delim}}"</code
+          >
+        </p>
+        <br />
+      </div>
     </div>
 
     <script>
-        Vue.createApp({
-            data() {
-                return {
-                    tags: [],
-                    customDelimiter: [',', ' '],
-                    options: ['vue', 'composition', 'js', 'mytag1', 'mayank1513']
-                };
-            },
-            components: {
-                TagInput
-            }
-        }).mount('#app')
+      Vue.createApp({
+        data() {
+          return {
+            tags: [],
+            customDelimiter: [",", " "],
+            options: ["vue", "composition", "js", "mytag1", "mayank1513"],
+          };
+        },
+        components: {
+          TagInput,
+        },
+      }).mount("#app");
     </script>
-</body>
-
+  </body>
 </html>
 ```
 
@@ -219,12 +270,11 @@ pnpm i && npm run build
 
 - Please start this repo
 - Follow us on [FaceBook](https://www.facebook.com/Learn-Vue-Js-104953725168718/)
-- Upvote our helpful posts on [StackOverflow](https://stackoverflow.com/users/story/9640177)
+- Upvote our helpful posts on [StackOverflow](https://stackoverflow.com/users/9640177/mayank-kumar-chaudhari)
 - Refer our courses to your colleagues, friends and business leaders
   - [Vue.js Complete Course + Guide](https://www.udemy.com/course/vuejs-complete-course-plus-guide/?referralCode=93BDA4A1FE3F73C37CD2)
   - [Vue 3 Essentials](https://www.udemy.com/course/vue-3-essentials/?referralCode=E6D2FDE2B8B06C1991F1)
 - Use our referrals to get advantage of special offers
-  - Learn [organic marketing](https://leads-arc.web.app/)
   - Open your free demat account with [Groww](https://groww.app.link/refe/mayank-kumar8914309)
   - Open your demat account with leading discount broker [Zerodha](https://zerodha.com/?c=GG0215&s=CONSOLE)
   - Buy what you need on [amzon.in](https://www.amazon.in/ref=assoc_aax_fallback_300x250?tag=mayank1513-21&linkCode=ur8) using [our refferal](https://www.amazon.in/ref=assoc_aax_fallback_300x250?tag=mayank1513-21&linkCode=ur8)

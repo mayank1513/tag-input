@@ -1,6 +1,4 @@
 <script setup lang="ts">
-// import TagInput from '@mayank1513/tag-input'
-// import '@mayank1513/tag-input/dist/TagInput.css'
 import { ref } from "vue";
 import TagInput from "../lib/TagInput.vue";
 

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/@mayank1513/vue-tag-input"></script>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@mayank1513/vue-tag-input@1.0.0/style.css"
+    />
+    <style>
+      #app {
+        font-family: Avenir, Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-align: center;
+        color: #2c3e50;
+        margin-top: 60px;
+        max-width: 1400px;
+        margin: auto;
+      }
+
+      .main {
+        text-align: start;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app">
+      <img
+        class="logo"
+        alt="Krishna Apps logo"
+        src="https://raw.githubusercontent.com/mayank1513/tag-input/master/src/assets/logo.png"
+      />
+      <br />
+      <h2>Presents</h2>
+      <h1>Vue Tag Input</h1>
+      <hr />
+      <div class="main">
+        <h1>Default options</h1>
+        <tag-input v-model="tags"></tag-input>
+        <br />
+        <span
+          >Use <code>enter</code> key or <code>tab</code> key to create a new
+          tag.</span
+        >
+        <h1>With custom delimiter and colors</h1>
+        <tag-input
+          tag-bg-color="lightgreen"
+          tag-text-color="darkgreen"
+          :custom-delimiter="customDelimiter"
+          v-model="tags"
+        ></tag-input>
+        <br />
+        <span
+          >Use <code>enter</code> key or <code>tab</code> key or any of the
+          custom delimeters to create a new tag.</span
+        >
+        <p>
+          Custom delimiters:
+          <code v-for="delim in customDelimiter" :key="delim">
+            "{{delim}}"</code
+          >
+        </p>
+        <br />
+        <h1>Do not allow custom tags</h1>
+        <tag-input
+          :options="options"
+          :allow-custom="false"
+          tag-bg-color="blue"
+          tag-text-color="lightblue"
+          :custom-delimiter="customDelimiter"
+          v-model="tags"
+        ></tag-input>
+        <br />
+        Try entering tag that is not in options and hit <code>enter</code>
+        <br />
+        <span
+          >Use <code>enter</code> key or <code>tab</code> key or any of the
+          custom delimeters to create a new tag.</span
+        >
+        <p>
+          Allowed Tags:
+          <code v-for="tag in options" :key="tag"> "{{tag}}"</code>
+        </p>
+        <p>
+          Custom delimiters:
+          <code v-for="delim in customDelimiter" :key="delim">
+            "{{delim}}"</code
+          >
+        </p>
+        <br />
+        <h1>Provide options for autofill but also allow custom tags</h1>
+        <tag-input
+          :options="options"
+          tag-bg-color="blue"
+          tag-text-color="lightblue"
+          :custom-delimiter="customDelimiter"
+          v-model="tags"
+        />
+        <br />
+        <span
+          >Use <code>enter</code> key or <code>tab</code> key or any of the
+          custom delimeters to create a new tag.</span
+        >
+        <p>
+          Allowed Tags:
+          <code v-for="tag in options" :key="tag"> "{{tag}}"</code>
+        </p>
+        <p>
+          Custom delimiters:
+          <code v-for="delim in customDelimiter" :key="delim">
+            "{{delim}}"</code
+          >
+        </p>
+        <br />
+      </div>
+    </div>
+
+    <script>
+      Vue.createApp({
+        data() {
+          return {
+            tags: [],
+            customDelimiter: [",", " "],
+            options: ["vue", "composition", "js", "mytag1", "mayank1513"],
+          };
+        },
+        components: {
+          TagInput,
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>
