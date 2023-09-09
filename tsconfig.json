@@ -8,11 +8,11 @@
 
     /* Bundler mode */
     "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
+    "outDir": "dist",
 
     /* Linting */
     "strict": true,
@@ -28,6 +28,10 @@
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
+    "lib/**/*.ts",
+    "lib/**/*.d.ts",
+    "lib/**/*.tsx",
+    "lib/**/*.vue",
     "vite.config.ts"
   ]
 }

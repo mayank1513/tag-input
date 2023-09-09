@@ -1,12 +1,18 @@
 <script setup lang="ts">
 // import TagInput from '@mayank1513/tag-input'
 // import '@mayank1513/tag-input/dist/TagInput.css'
-import { ref } from 'vue';
-import TagInput from './components/TagInput.vue'
+import { ref } from "vue";
+import TagInput from "../lib/TagInput.vue";
 
 const tags = ref<string[]>([]);
-const customDelimiter = ref<string[] | string>([',', ' '])
-const options = ref<string[]>(['vue', 'composition', 'js', 'mytag1', 'mayank1513'])
+const customDelimiter = ref<string[] | string>([",", " "]);
+const options = ref<string[]>([
+  "vue",
+  "composition",
+  "js",
+  "mytag1",
+  "mayank1513",
+]);
 </script>
 
 <template>
@@ -18,30 +24,73 @@ const options = ref<string[]>(['vue', 'composition', 'js', 'mytag1', 'mayank1513
   <div class="main">
     <h1>Default options</h1>
     <tag-input v-model="tags" />
-    <br>
-    <span>Use <code>enter</code> key or <code>tab</code> key to create a new tag.</span>
+    <br />
+    <span
+      >Use <code>enter</code> key or <code>tab</code> key to create a new
+      tag.</span
+    >
     <h1>With custom delimiter and colors</h1>
-    <tag-input tagBgColor="lightgreen" tagTextColor="darkgreen" :customDelimiter="customDelimiter" v-model="tags" />
-    <br>
-    <span>Use <code>enter</code> key or <code>tab</code> key or any of the custom delimeters to create a new tag.</span>
-    <p>Custom delimiters: <code v-for="delim in customDelimiter" :key="delim"> "{{delim}}"</code></p>
-    <br>
+    <tag-input
+      tagBgColor="lightgreen"
+      tagTextColor="darkgreen"
+      :customDelimiter="customDelimiter"
+      v-model="tags"
+    />
+    <br />
+    <span
+      >Use <code>enter</code> key or <code>tab</code> key or any of the custom
+      delimeters to create a new tag.</span
+    >
+    <p>
+      Custom delimiters:
+      <code v-for="delim in customDelimiter" :key="delim"> "{{ delim }}"</code>
+    </p>
+    <br />
     <h1>Do not allow custom tags</h1>
-    <tag-input :options="options" :allowCustom="false" tagBgColor="blue" tagTextColor="lightblue" :customDelimiter="customDelimiter" v-model="tags" />
-    <br>
+    <tag-input
+      :options="options"
+      :allowCustom="false"
+      tagBgColor="blue"
+      tagTextColor="lightblue"
+      :customDelimiter="customDelimiter"
+      v-model="tags"
+    />
+    <br />
     Try entering tag that is not in options and hit <code>enter</code>
-    <br>
-    <span>Use <code>enter</code> key or <code>tab</code> key or any of the custom delimeters to create a new tag.</span>
-    <p>Allowed Tags: <code v-for="tag in options" :key="tag"> "{{tag}}"</code></p>
-    <p>Custom delimiters: <code v-for="delim in customDelimiter" :key="delim"> "{{delim}}"</code></p>
-    <br>
+    <br />
+    <span
+      >Use <code>enter</code> key or <code>tab</code> key or any of the custom
+      delimeters to create a new tag.</span
+    >
+    <p>
+      Allowed Tags: <code v-for="tag in options" :key="tag"> "{{ tag }}"</code>
+    </p>
+    <p>
+      Custom delimiters:
+      <code v-for="delim in customDelimiter" :key="delim"> "{{ delim }}"</code>
+    </p>
+    <br />
     <h1>Provide options for autofill but also allow custom tags</h1>
-    <tag-input :options="options" tagBgColor="blue" tagTextColor="lightblue" :customDelimiter="customDelimiter" v-model="tags" />
-    <br>
-    <span>Use <code>enter</code> key or <code>tab</code> key or any of the custom delimeters to create a new tag.</span>
-    <p>Allowed Tags: <code v-for="tag in options" :key="tag"> "{{tag}}"</code></p>
-    <p>Custom delimiters: <code v-for="delim in customDelimiter" :key="delim"> "{{delim}}"</code></p>
-    <br>
+    <tag-input
+      :options="options"
+      tagBgColor="blue"
+      tagTextColor="lightblue"
+      :customDelimiter="customDelimiter"
+      v-model="tags"
+    />
+    <br />
+    <span
+      >Use <code>enter</code> key or <code>tab</code> key or any of the custom
+      delimeters to create a new tag.</span
+    >
+    <p>
+      Allowed Tags: <code v-for="tag in options" :key="tag"> "{{ tag }}"</code>
+    </p>
+    <p>
+      Custom delimiters:
+      <code v-for="delim in customDelimiter" :key="delim"> "{{ delim }}"</code>
+    </p>
+    <br />
   </div>
 </template>
 
