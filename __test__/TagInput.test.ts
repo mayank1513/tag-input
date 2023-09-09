@@ -29,7 +29,7 @@ describe.concurrent("TagInput", () => {
     expect(wrapper.props("modelValue")).toStrictEqual(["Tag1"]);
   });
 
-  test("Do not allow custom tags", async ({ expect }) => {
+  test("Restrict tags to options provided", async ({ expect }) => {
     await wrapper.setProps({ allowCustom: false, options: ["tag1", "tag2"] });
     input.setValue("tag1");
     input.trigger("keydown", { key: "tab" });
@@ -37,6 +37,14 @@ describe.concurrent("TagInput", () => {
     input.setValue("NotInOption");
     input.trigger("keydown", { key: "enter" });
     expect(wrapper.props("modelValue")).toStrictEqual(["tag1"]);
+  });
+
+  test("Delete Tag", async ({ expect }) => {
+    input.setValue("Tag1");
+    input.trigger("keydown", { key: "tab" });
+    expect(wrapper.props("modelValue")).toStrictEqual(["Tag1"]);
+    input.trigger("keydown", { key: "delete" });
+    expect(wrapper.props("modelValue")).toStrictEqual([]);
   });
 
   test.todo("Custom Delimiter", async ({ expect }) => {
