@@ -41,12 +41,20 @@ packageJson.main = "TagInput.umd.cjs";
 packageJson.module = "TagInput.js";
 packageJson.types = "TagInput.vue.d.ts";
 
+const outDir = path.resolve(process.cwd(), "dist", "lib");
+
 fs.writeFileSync(
-  path.resolve(process.cwd(), "dist", "lib", "package.json"),
+  path.resolve(outDir, "package.json"),
   JSON.stringify(packageJson, null, 2)
 );
 
 fs.copyFileSync(
   path.resolve(process.cwd(), "README.md"),
-  path.resolve(process.cwd(), "dist", "lib", "README.md")
+  path.resolve(outDir, "README.md")
+);
+
+fs.rename(
+  path.resolve(outDir, "TagInput.umd.cjs"),
+  path.resolve(outDir, "TagInput.umd.mjs"),
+  () => {}
 );
