@@ -23,7 +23,7 @@ jobs:
         run: npm i
 
       - name: Test and build package
-        run: npm run build:lib
+        run: npm test && npm run build:lib
       - name: Publish to npm
         run: cd dist/lib && npm publish --access=public
         env:
