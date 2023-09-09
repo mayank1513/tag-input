@@ -2,19 +2,17 @@
 import { ref, watch, nextTick, onMounted, computed } from "vue";
 
 export interface TagInputProps {
-  name: string;
   modelValue: string[];
-  options: string[];
-  allowCustom: boolean;
-  showCount: boolean;
-  tagTextColor: string;
-  tagBgColor: string;
-  tagClass: string;
-  customDelimiter: string[] | string;
+  options?: string[];
+  allowCustom?: boolean;
+  showCount?: boolean;
+  tagTextColor?: string;
+  tagBgColor?: string;
+  tagClass?: string;
+  customDelimiter?: string[] | string;
 }
 
 const props = withDefaults(defineProps<TagInputProps>(), {
-  name: "",
   modelValue: () => [],
   options: () => [],
   allowCustom: true,
@@ -23,13 +21,6 @@ const props = withDefaults(defineProps<TagInputProps>(), {
   tagBgColor: "rgb(250, 104, 104)",
   tagClass: "",
   customDelimiter: () => [],
-  // validator: (val: string[] | string) => {
-  //   if (typeof val == "string") return val.length == 1;
-  //   for (let i = 0; i < val.length; i++) {
-  //     if (typeof val[i] != "string" || val[i].length != 1) return false;
-  //   }
-  //   return true;
-  // },
 });
 const emit = defineEmits(["update:modelValue"]);
 // Tags
@@ -40,9 +31,9 @@ const id = Math.random().toString(36).substring(7);
 const customDelimiter: string[] | string = [
   ...new Set(
     (typeof props.customDelimiter == "string"
-      ? [props.customDelimiter]
+      ? props.customDelimiter.split("")
       : props.customDelimiter
-    ).filter((delimeter: string) => delimeter.length == 1)
+    ).flatMap((delim) => delim.split(""))
   ),
 ];
 

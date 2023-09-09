@@ -24,3 +24,6 @@ pnpm-debug.log*
 
 # lock files
 *lock*
+
+# Test coverage
+coverage
