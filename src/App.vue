@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import TagInput from "../lib/TagInput.vue";
+import Npm from "./components/Npm.vue";
 
 const tags = ref<string[]>([]);
 const customDelimiter = ref<string[] | string>([",", " "]);
@@ -20,6 +21,7 @@ const options = ref<string[]>([
   <h1>Vue Tag Input</h1>
   <hr />
   <div class="main">
+    <npm />
     <h1>Default options</h1>
     <tag-input v-model="tags" />
     <br />

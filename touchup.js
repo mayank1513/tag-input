@@ -37,7 +37,7 @@ delete packageJson.devDependencies;
 delete packageJson.dependencies;
 delete packageJson.scripts;
 
-packageJson.main = "TagInput.umd.cjs";
+packageJson.main = "TagInput.umd.mjs";
 packageJson.module = "TagInput.js";
 packageJson.types = "TagInput.vue.d.ts";
 

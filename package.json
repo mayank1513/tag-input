@@ -3,7 +3,7 @@
   "author": "Mayank Kumar Chaudhari <https://mayank-chaudhari.vercel.app>",
   "private": false,
   "description": "A versatile tag input component built with Vue 3 Composition API",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "type": "module",
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
     "test": "vitest run --coverage"
   },
   "dependencies": {
+    "@mayank1513/vue-tag-input": "^1.0.2",
     "vue": "^3.3.4"
   },
   "devDependencies": {
