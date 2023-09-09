@@ -1,4 +1,4 @@
-# TagInput
+# TagInput [![Version](https://img.shields.io/npm/v/@mayank1513/vue-tag-input.svg?colorB=green)](https://www.npmjs.com/package/@mayank1513/vue-tag-input) [![codecov](https://codecov.io/gh/mayank1513/tag-input/graph/badge.svg)](https://codecov.io/gh/mayank1513/tag-input) [![Downloads](https://img.jsdelivr.com/img.shields.io/npm/dt/@mayank1513/vue-tag-input.svg)](https://www.npmjs.com/package/@mayank1513/vue-tag-input) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@mayank1513/vue-tag-input)](https://www.npmjs.com/package/@mayank1513/vue-tag-input) [![Publish to npm and GitHub](https://github.com/mayank1513/tag-input/actions/workflows/test.yml/badge.svg)](https://github.com/mayank1513/tag-input/actions/workflows/publish-to-npm-on-new-release.yml) [![Contact me on Codementor](https://www.codementor.io/m-badges/mayank1513/get-help.svg)](https://www.codementor.io/@mayank1513?refer=badge)
 
 ![tag-input.gif](tag-input.gif)
 
@@ -13,31 +13,45 @@ Follow us on [FaceBook](https://www.facebook.com/Learn-Vue-Js-104953725168718/) 
 > To keep it thin and performant we have chosen to provide only the minified version. Because, that's what you really need. In case you are looking for the full version build your own from this source code as per [Build](#Build) section.
 
 ## [live demo](https://mayank1513.github.io/tag-input/demo.html)
+
 ## Install
+
 ### npm
+
 ```
 npm i @mayank1513/vue-tag-input --production
 ```
+
 or
+
 ```
 pnpm i @mayank1513/vue-tag-input --production
 ```
+
 or
+
 ```
 yarn add @mayank1513/vue-tag-input --production
 ```
-Add dependency in package.json 
+
+Add dependency in package.json
+
 ```
     "@mayank1513/vue-tag-input": "^0.0.3"
 ```
+
 ### cdn
+
 ```
     <script src="https://unpkg.com/vue@3.0.11"></script>
     <script src="https://unpkg.com/@mayank1513/tag-input"></script>
     <link rel="stylesheet" href="https://unpkg.com/@mayank1513/tag-input@0.1.2/dist/TagInput.css">
 ```
+
 ## Usage
+
 ### npm
+
 ```
 <template>
     ...
@@ -68,7 +82,9 @@ export default {
 ```
 
 ### cdn
+
 basic usage
+
 ```
 <!DOCTYPE html>
 <html lang="en">
@@ -124,7 +140,7 @@ advanced usage
             max-width: 1400px;
             margin: auto;
         }
-        
+
         .main {
             text-align: start;
         }
@@ -188,15 +204,19 @@ advanced usage
 
 </html>
 ```
+
 ## Build
+
 To build the example clone the repo `git clone https://github.com/mayank1513/tag-input.git` and run
 
 ```
 npm i && npm run build
 // or
-pnpm i && npm run build 
+pnpm i && npm run build
 ```
+
 ## Help us to help you more
+
 - Please start this repo
 - Follow us on [FaceBook](https://www.facebook.com/Learn-Vue-Js-104953725168718/)
 - Upvote our helpful posts on [StackOverflow](https://stackoverflow.com/users/story/9640177)
@@ -204,7 +224,7 @@ pnpm i && npm run build
   - [Vue.js Complete Course + Guide](https://www.udemy.com/course/vuejs-complete-course-plus-guide/?referralCode=93BDA4A1FE3F73C37CD2)
   - [Vue 3 Essentials](https://www.udemy.com/course/vue-3-essentials/?referralCode=E6D2FDE2B8B06C1991F1)
 - Use our referrals to get advantage of special offers
-  - Learn [organic marketing](https://leads-arc.web.app/) 
+  - Learn [organic marketing](https://leads-arc.web.app/)
   - Open your free demat account with [Groww](https://groww.app.link/refe/mayank-kumar8914309)
   - Open your demat account with leading discount broker [Zerodha](https://zerodha.com/?c=GG0215&s=CONSOLE)
   - Buy what you need on [amzon.in](https://www.amazon.in/ref=assoc_aax_fallback_300x250?tag=mayank1513-21&linkCode=ur8) using [our refferal](https://www.amazon.in/ref=assoc_aax_fallback_300x250?tag=mayank1513-21&linkCode=ur8)
@@ -213,7 +233,6 @@ pnpm i && npm run build
 - Want to learn business skills? Checkout [Bada Business](https://www.badabusiness.com/dd/BIMK003866)
 
 ## Contribute for a Cause
+
 - [PM Cares Fund](https://www.pmcares.gov.in/en/)
 - [#IamOxygenMan](https://www.badabusiness.com/IamOxygenMan)
-
-
