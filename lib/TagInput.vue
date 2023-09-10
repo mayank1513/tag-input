@@ -100,6 +100,23 @@ const availableOptions = computed(() => {
   if (!props.options) return false;
   return props.options.filter((option) => !tags.value.includes(option));
 });
+
+const shouldDelete = ref<boolean>(false);
+let timer: NodeJS.Timeout | null = null;
+
+const deleteLastTag = () => {
+  if (newTag.value.length === 0 && tags.value.length > 0) {
+    if (shouldDelete.value) {
+      timer && clearTimeout(timer);
+      shouldDelete.value = false;
+      removeTag(tags.value.length - 1);
+    } else {
+      shouldDelete.value = true;
+      timer && clearTimeout(timer);
+      timer = setTimeout(() => (shouldDelete.value = false), 3000);
+    }
+  }
+};
 </script>
 
 <template>
@@ -114,7 +131,7 @@ const availableOptions = computed(() => {
       autocomplete="off"
       @keydown.enter="addTag(newTag)"
       @keydown.prevent.tab="addTag(newTag)"
-      @keydown.delete="newTag.length || removeTag(tags.length - 1)"
+      @keydown.delete="deleteLastTag()"
       @input="addTagIfDelem(newTag)"
       :style="{ 'padding-left': `${paddingLeft}px` }"
     />
@@ -132,6 +149,7 @@ const availableOptions = computed(() => {
         :class="{
           duplicate: tag === duplicate,
           tag: tagsClass.length == 0,
+          del: shouldDelete && index === tags.length - 1,
           [tagsClass]: true,
         }"
       >
@@ -179,6 +197,10 @@ ul {
   color: var(--tagTextColor);
   white-space: nowrap;
   transition: 0.1s ease background;
+}
+
+.del {
+  background: red;
 }
 
 .delete {
