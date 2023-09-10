@@ -18,7 +18,7 @@ const props = withDefaults(defineProps<TagInputProps>(), {
   allowCustom: true,
   showCount: false,
   tagTextColor: "white",
-  tagBgColor: "rgb(250, 104, 104)",
+  tagBgColor: "rgb(120, 54, 10)",
   tagClass: "",
   customDelimiter: () => [],
 });
