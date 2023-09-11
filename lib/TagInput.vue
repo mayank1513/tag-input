@@ -10,6 +10,7 @@ export interface TagInputProps {
   tagBgColor?: string;
   tagClass?: string;
   customDelimiter?: string[] | string;
+  singleLine: boolean
 }
 
 const props = withDefaults(defineProps<TagInputProps>(), {
@@ -21,12 +22,14 @@ const props = withDefaults(defineProps<TagInputProps>(), {
   tagBgColor: "rgb(120, 54, 10)",
   tagClass: "",
   customDelimiter: () => [],
+  singleLine: false
 });
 const emit = defineEmits(["update:modelValue"]);
 // Tags
 const tags = ref<string[]>(props.modelValue);
 const tagsClass = ref(props.tagClass);
 const newTag = ref("");
+const focused = ref(false);
 const id = Math.random().toString(36).substring(7);
 const customDelimiter = computed<string[] | string>(() => [
   ...new Set(
@@ -79,14 +82,10 @@ const removeTag = (index: number) => {
 };
 
 // positioning and handling tag change
-const paddingLeft = ref(10);
 const tagsUl = ref<HTMLUListElement | null>(null);
 const onTagsChange = () => {
-  // position cursor
-  const extraCushion = 15;
   tagsUl.value?.style.setProperty("--tagBgColor", props.tagBgColor);
   tagsUl.value?.style.setProperty("--tagTextColor", props.tagTextColor);
-  paddingLeft.value = (tagsUl.value?.clientWidth || 0) + extraCushion;
   // scroll to end of tags
   tagsUl.value?.scrollTo(tagsUl.value.scrollWidth, 0);
   // emit value on tags change
@@ -117,50 +116,37 @@ const deleteLastTag = () => {
     }
   }
 };
+const inputElId = `tag-input${Math.random()}`
 </script>
 
 <template>
-  <div
-    class="tag-input"
-    :class="{ 'with-count': showCount, duplicate: noMatchingTag }"
-  >
-    <input
-      v-model="newTag"
-      type="text"
-      :list="id"
-      autocomplete="off"
-      @keydown.enter="addTag(newTag)"
-      @keydown.prevent.tab="addTag(newTag)"
-      @keydown.delete="deleteLastTag()"
-      @input="addTagIfDelem(newTag)"
-      :style="{ 'padding-left': `${paddingLeft}px` }"
-    />
-
-    <datalist v-if="options" :id="id">
-      <option v-for="option in availableOptions" :key="option" :value="option">
-        {{ option }}
-      </option>
-    </datalist>
-
-    <ul class="tags" ref="tagsUl">
-      <li
-        v-for="(tag, index) in tags"
-        :key="tag"
-        :class="{
-          duplicate: tag === duplicate,
-          tag: tagsClass.length == 0,
-          del: shouldDelete && index === tags.length - 1,
-          [tagsClass]: true,
-        }"
-      >
+  <label :for="inputElId">
+    <ul class="tags" ref="tagsUl" tabindex="0" :class="{ duplicate, focused, noMatchingTag, singleLine }">
+      <li v-for="(tag, index) in tags" :key="tag" :class="{
+        duplicate: tag === duplicate,
+        tag: tagsClass.length == 0,
+        del: shouldDelete && index === tags.length - 1,
+        [tagsClass]: true,
+      }">
         {{ tag }}
         <button class="delete" @click="removeTag(index)">x</button>
       </li>
+      <div class="tag-input">
+        <input v-model="newTag" :id="inputElId" type="text" :list="id" autocomplete="off" @keydown.enter="addTag(newTag)"
+          @keydown.prevent.tab="addTag(newTag)" @keydown.delete="deleteLastTag()" @input="addTagIfDelem(newTag)"
+          placeholder="Enter tag" @focus="focused = true" @blur="focused = false" />
+
+        <datalist v-if="options" :id="id">
+          <option v-for="option in availableOptions" :key="option" :value="option">
+            {{ option }}
+          </option>
+        </datalist>
+      </div>
+      <div v-if="showCount" class="count">
+        <span>{{ tags.length }}</span> tags
+      </div>
     </ul>
-    <div v-if="showCount" class="count">
-      <span>{{ tags.length }}</span> tags
-    </div>
-  </div>
+  </label>
   <small v-show="noMatchingTag" class="err">Custom tags not allowed</small>
 </template>
 
@@ -171,23 +157,42 @@ const deleteLastTag = () => {
 
 .tag-input {
   position: relative;
+  width: 250px;
 }
 
-ul {
+.tags {
   --tagBgColor: rgb(250, 104, 104);
   --tagTextColor: white;
   list-style: none;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 7px;
   margin: 0;
-  padding: 0;
-  position: absolute;
-  top: 0;
-  bottom: 0;
+  padding: 10px;
   left: 10px;
   max-width: 75%;
-  overflow-x: auto;
+  border-bottom: 1px solid #5558;
+  cursor: text;
+
+  &.singleLine {
+    flex-wrap: nowrap;
+    overflow: auto;
+  }
+
+  &.focused {
+    border-bottom: 2px solid #55fa;
+  }
+
+  &.duplicate {
+    border-bottom: 1px solid rgb(235, 27, 27);
+  }
+
+  &.noMatchingTag {
+    outline: rgb(235, 27, 27);
+    border: 1px solid rgb(235, 27, 27);
+    animation: shake1 0.5s;
+  }
 }
 
 .tag {
@@ -216,25 +221,15 @@ ul {
   animation: shake 1s;
 }
 
-.duplicate input {
-  outline: rgb(235, 27, 27);
-  border: 1px solid rgb(235, 27, 27);
-  animation: shake1 0.5s;
-}
-
 input {
-  width: 100%;
-  padding: 10px;
+  all: unset;
 }
 
 .count {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  right: 10px;
-  display: block;
   font-size: 0.8rem;
   white-space: nowrap;
+  flex-grow: 1;
+  text-align: end;
 }
 
 .count span {
@@ -243,51 +238,52 @@ input {
   border-radius: 2px;
 }
 
-.with-count input {
-  padding-right: 60px;
-}
-
-.with-count ul {
-  max-width: 60%;
-}
-
 .err {
   color: red;
 }
 
 @keyframes shake {
+
   10%,
   90% {
     transform: scale(0.9) translate3d(-1px, 0, 0);
   }
+
   20%,
   80% {
     transform: scale(0.9) translate3d(2px, 0, 0);
   }
+
   30%,
   50%,
   70% {
     transform: scale(0.9) translate3d(-4px, 0, 0);
   }
+
   40%,
   60% {
     transform: scale(0.9) translate3d(4px, 0, 0);
   }
 }
+
 @keyframes shake1 {
+
   10%,
   90% {
     transform: scale(0.99) translate3d(-1px, 0, 0);
   }
+
   20%,
   80% {
     transform: scale(0.98) translate3d(2px, 0, 0);
   }
+
   30%,
   50%,
   70% {
     transform: scale(1) translate3d(-4px, 0, 0);
   }
+
   40%,
   60% {
     transform: scale(0.98) translate3d(4px, 0, 0);
