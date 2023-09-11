@@ -10,6 +10,7 @@ export interface TagInputProps {
   tagBgColor?: string;
   tagClass?: string;
   customDelimiter?: string[] | string;
+  singleLine: boolean
 }
 
 const props = withDefaults(defineProps<TagInputProps>(), {
@@ -21,6 +22,7 @@ const props = withDefaults(defineProps<TagInputProps>(), {
   tagBgColor: "rgb(120, 54, 10)",
   tagClass: "",
   customDelimiter: () => [],
+  singleLine: false
 });
 const emit = defineEmits(["update:modelValue"]);
 // Tags
@@ -119,7 +121,7 @@ const inputElId = `tag-input${Math.random()}`
 
 <template>
   <label :for="inputElId">
-    <ul class="tags" ref="tagsUl" tabindex="0" :class="{ 'with-count': showCount, duplicate, focused, noMatchingTag }">
+    <ul class="tags" ref="tagsUl" tabindex="0" :class="{ showCount, duplicate, focused, noMatchingTag, singleLine }">
       <li v-for="(tag, index) in tags" :key="tag" :class="{
         duplicate: tag === duplicate,
         tag: tagsClass.length == 0,
@@ -172,6 +174,11 @@ const inputElId = `tag-input${Math.random()}`
   max-width: 75%;
   border-bottom: 1px solid #5558;
   cursor: text;
+
+  &.singleLine {
+    flex-wrap: nowrap;
+    overflow: auto;
+  }
 
   &.focused {
     border-bottom: 2px solid #55fa;
@@ -234,7 +241,7 @@ input {
   border-radius: 2px;
 }
 
-.with-count input {
+.showCount input {
   padding-right: 60px;
 }
 
