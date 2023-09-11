@@ -1,124 +1,74 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import TagInput from "../lib/TagInput.vue";
-import Npm from "./components/Npm.vue";
-
-const tags = ref<string[]>([]);
-const customDelimiter = ref<string[] | string>([",", " "]);
-const options = ref<string[]>([
-  "vue",
-  "composition",
-  "js",
-  "mytag1",
-  "mayank1513",
-]);
+import { RouterView, RouterLink } from "vue-router";
 </script>
 
 <template>
-  <img class="logo" alt="Krishna Apps logo" src="./assets/logo.png" />
-  <br />
-  <h2>Presents</h2>
-  <h1>Vue Tag Input</h1>
-  <hr />
-  <div class="main">
-    <npm />
-    <h1>Default options</h1>
-    <tag-input v-model="tags" />
-    <br />
-    <span
-      >Use <code>enter</code> key or <code>tab</code> key to create a new
-      tag.</span
-    >
-    <h1>With custom delimiter and colors</h1>
-    <tag-input
-      tagBgColor="lightgreen"
-      tagTextColor="darkgreen"
-      :customDelimiter="customDelimiter"
-      v-model="tags"
-    />
-    <br />
-    <span
-      >Use <code>enter</code> key or <code>tab</code> key or any of the custom
-      delimeters to create a new tag.</span
-    >
-    <p>
-      Custom delimiters:
-      <code v-for="delim in customDelimiter" :key="delim"> "{{ delim }}"</code>
-    </p>
-    <br />
-    <h1>Do not allow custom tags</h1>
-    <tag-input
-      :options="options"
-      :allowCustom="false"
-      tagBgColor="blue"
-      tagTextColor="lightblue"
-      :customDelimiter="customDelimiter"
-      v-model="tags"
-    />
-    <br />
-    Try entering tag that is not in options and hit <code>enter</code>
-    <br />
-    <span
-      >Use <code>enter</code> key or <code>tab</code> key or any of the custom
-      delimeters to create a new tag.</span
-    >
-    <p>
-      Allowed Tags: <code v-for="tag in options" :key="tag"> "{{ tag }}"</code>
-    </p>
-    <p>
-      Custom delimiters:
-      <code v-for="delim in customDelimiter" :key="delim"> "{{ delim }}"</code>
-    </p>
-    <br />
-    <h1>Provide options for autofill but also allow custom tags</h1>
-    <tag-input
-      :options="options"
-      tagBgColor="blue"
-      tagTextColor="lightblue"
-      :customDelimiter="customDelimiter"
-      v-model="tags"
-      :showCount="true"
-    />
-    <br />
-    <span
-      >Use <code>enter</code> key or <code>tab</code> key or any of the custom
-      delimeters to create a new tag.</span
-    >
-    <p>
-      Allowed Tags: <code v-for="tag in options" :key="tag"> "{{ tag }}"</code>
-    </p>
-    <p>
-      Custom delimiters:
-      <code v-for="delim in customDelimiter" :key="delim"> "{{ delim }}"</code>
-    </p>
-    <br />
+  <div class="container">
+    <aside>
+      <h1>Vue Tag Input</h1>
+      A versatile tag input component built with Vue 3 Composition API.
+      <hr />
+      <p>
+        <router-link to="/">Home</router-link>
+        <router-link to="/getting-started">Getting Started</router-link>
+        <details>
+          <summary>Examples</summary>
+        </details>
+      </p>
+    </aside>
+    <main>
+      <router-view />
+    </main>
   </div>
 </template>
 
-<style>
+<style lang="scss">
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+a {
+  color: inherit;
+  display: block;
+  padding: 10px;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
-  max-width: 1400px;
-  margin: auto;
 }
-.main {
-  text-align: start;
+.container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
 }
-.logo {
-  width: 70%;
-  max-width: 250px;
+.container aside {
+  width: 400px;
+  background: #1e2a31;
+  overflow: auto;
+  padding: 10px;
+  color: #b0c4cf;
+  box-shadow: 0 0 5px #1e2a31;
+  p {
+    text-align: start;
+  }
 }
-.tag1 {
-  background: green;
-  color: red;
-  padding: 5px;
-  border-radius: 4px;
-  white-space: nowrap;
-  transition: 0.1s ease background;
+.container main {
+  overflow: auto;
+  flex-grow: 1;
+  padding: 10px;
+}
+@media (max-width: 600px) {
+  .container {
+    flex-direction: column;
+    aside {
+      height: 320px;
+      overflow: hidden;
+    }
+  }
 }
 </style>

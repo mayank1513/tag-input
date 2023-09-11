@@ -1,12 +1,26 @@
 # TagInput
 
-A versetile tag input component built with Vue 3 Composition API.
+A versatile tag input component built with Vue 3 Composition API.
 
 [![Version](https://img.shields.io/npm/v/@mayank1513/vue-tag-input.svg?colorB=green)](https://www.npmjs.com/package/@mayank1513/vue-tag-input) [![codecov](https://codecov.io/gh/mayank1513/tag-input/graph/badge.svg)](https://codecov.io/gh/mayank1513/tag-input) [![Downloads](https://img.jsdelivr.com/img.shields.io/npm/dt/@mayank1513/vue-tag-input.svg)](https://www.npmjs.com/package/@mayank1513/vue-tag-input) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@mayank1513/vue-tag-input)](https://www.npmjs.com/package/@mayank1513/vue-tag-input) [![Publish to npm and GitHub](https://github.com/mayank1513/tag-input/actions/workflows/test.yml/badge.svg)](https://github.com/mayank1513/tag-input/actions/workflows/publish-to-npm-on-new-release.yml) [![Get help](codementor.svg)](https://www.codementor.io/@mayank1513?refer=badge)
 
 ![tag-input.gif](tag-input.gif)
 
-Please read [this article](https://javascript.plainenglish.io/building-a-tag-input-component-with-the-vue-3-composition-api-c5d20dcbe3) to learn how to build this package step by step and the background story.
+## Features
+
+- ✅ No dependencies
+- ✅ Input box stays focused - no need to re-focus the input => better UX
+- ✅ Autocompletion
+- ✅ Fast setup
+- ✅ Works with Vuex
+- ✅ Small size: 1.6 kB gzipped
+- ✅ Many customization options
+- ✅ Delete tags on backspace / delete key
+- ✅ Confirm before delete - tags turns red when backspace is pressed, gets deleted when backspace is pressed again
+- ✅ Works well with copy & paste
+- ✅ Examples & Docs
+
+Please read [this article](https://mayank1513.medium.com/creating-a-tag-input-component-using-the-vue-3-composition-api-feae06d58492) to learn how to build this package step by step and the background story.
 
 To learn vue js please check out our courses [Vue.js Complete Course + Guide](https://www.udemy.com/course/vuejs-complete-course-plus-guide/?referralCode=93BDA4A1FE3F73C37CD2) and [Vue 3 Essentials](https://www.udemy.com/course/vue-3-essentials/?referralCode=E6D2FDE2B8B06C1991F1)
 
@@ -14,11 +28,11 @@ Follow us on [FaceBook](https://www.facebook.com/Learn-Vue-Js-104953725168718/) 
 
 > To keep it thin and performant we have chosen to provide only the minified version. Because, that's what you really need. In case you are looking for the full version build your own from this source code as per [Build](#Build) section.
 
-## [live demo](https://mayank1513.github.io/tag-input/demo.html)
+## [live demo](https://vue-tag-input.vercel.app)
 
 ## Install
 
-### npm
+### NPM
 
 ```bash
 npm i @mayank1513/vue-tag-input --production
@@ -36,12 +50,12 @@ or
 yarn add @mayank1513/vue-tag-input --production
 ```
 
-### cdn
+### CDN
 
 ```
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://unpkg.com/@mayank1513/vue-tag-input"></script>
-    <link rel="stylesheet" href="https://unpkg.com/@mayank1513/vue-tag-input@1.0.0/dist/style.css">
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://unpkg.com/@mayank1513/vue-tag-input"></script>
+<link rel="stylesheet" href="https://unpkg.com/@mayank1513/vue-tag-input@1.0.0/dist/style.css">
 ```
 
 ## Usage
@@ -291,7 +305,7 @@ pnpm i && npm run build
 
 ## License
 
-Licensed as MIT open source.
+Licensed as MIT open source. Copyright © 2023 <a href="https://mayank-chaudhari.vercel.app" target="_blank">Mayank Kumar Chaudhari</a>
 
 <hr />
 
