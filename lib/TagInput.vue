@@ -121,7 +121,7 @@ const inputElId = `tag-input${Math.random()}`
 
 <template>
   <label :for="inputElId">
-    <ul class="tags" ref="tagsUl" tabindex="0" :class="{ showCount, duplicate, focused, noMatchingTag, singleLine }">
+    <ul class="tags" ref="tagsUl" tabindex="0" :class="{ duplicate, focused, noMatchingTag, singleLine }">
       <li v-for="(tag, index) in tags" :key="tag" :class="{
         duplicate: tag === duplicate,
         tag: tagsClass.length == 0,
@@ -142,11 +142,11 @@ const inputElId = `tag-input${Math.random()}`
           </option>
         </datalist>
       </div>
+      <div v-if="showCount" class="count">
+        <span>{{ tags.length }}</span> tags
+      </div>
     </ul>
   </label>
-  <div v-if="showCount" class="count">
-    <span>{{ tags.length }}</span> tags
-  </div>
   <small v-show="noMatchingTag" class="err">Custom tags not allowed</small>
 </template>
 
@@ -226,23 +226,16 @@ input {
 }
 
 .count {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  right: 10px;
-  display: block;
   font-size: 0.8rem;
   white-space: nowrap;
+  flex-grow: 1;
+  text-align: end;
 }
 
 .count span {
   background: #eee;
   padding: 2px;
   border-radius: 2px;
-}
-
-.showCount input {
-  padding-right: 60px;
 }
 
 .err {
