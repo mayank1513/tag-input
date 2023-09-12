@@ -30,7 +30,7 @@ const tags = ref<string[]>(props.modelValue);
 const tagsClass = ref(props.tagClass);
 const newTag = ref("");
 const focused = ref(false);
-const id = Math.random().toString(36).substring(7);
+const activeOptionInd = ref(-1);
 const customDelimiter = computed<string[] | string>(() => [
   ...new Set(
     (typeof props.customDelimiter == "string"
@@ -56,6 +56,7 @@ function handleNoMatchingTag() {
     newTag.value = v.slice(0, v.length - 1);
 }
 const addTag = (tag: string) => {
+  console.log({ tag })
   tag = tag.trim();
   if (!tag) return; // prevent empty tag
   // only allow predefined tags when allowCustom is false
@@ -71,6 +72,7 @@ const addTag = (tag: string) => {
   }
   tags.value.push(tag);
   newTag.value = ""; // reset newTag
+  activeOptionInd.value = -1;
 };
 const addTagIfDelem = (tag: string) => {
   if (!customDelimiter.value || customDelimiter.value.length == 0) return;
@@ -96,8 +98,8 @@ onMounted(onTagsChange);
 
 // options
 const availableOptions = computed(() => {
-  if (!props.options) return false;
-  return props.options.filter((option) => !tags.value.includes(option));
+  if (!props.options) return [];
+  return props.options.filter((option) => newTag.value && !tags.value.includes(option) && option.match(new RegExp(newTag.value, 'i')));
 });
 
 const shouldDelete = ref<boolean>(false);
@@ -116,7 +118,8 @@ const deleteLastTag = () => {
     }
   }
 };
-const inputElId = `tag-input${Math.random()}`
+const id = Math.random().toString(36).substring(7);
+const inputElId = `tag-input${id}`
 </script>
 
 <template>
@@ -132,15 +135,19 @@ const inputElId = `tag-input${Math.random()}`
         <button class="delete" @click="removeTag(index)">x</button>
       </li>
       <div class="tag-input">
-        <input v-model="newTag" :id="inputElId" type="text" :list="id" autocomplete="off" @keydown.enter="addTag(newTag)"
+        <input v-model="newTag" :id="inputElId" type="text" autocomplete="off"
+          @keydown.enter="addTag(activeOptionInd > -1 ? availableOptions[activeOptionInd] : newTag)"
           @keydown.prevent.tab="addTag(newTag)" @keydown.delete="deleteLastTag()" @input="addTagIfDelem(newTag)"
+          @keydown.down="activeOptionInd = (activeOptionInd + 1) % availableOptions.length"
+          @keydown.up="activeOptionInd = (availableOptions.length + activeOptionInd - 1) % availableOptions.length"
           placeholder="Enter tag" @focus="focused = true" @blur="focused = false" />
 
-        <datalist v-if="options" :id="id">
-          <option v-for="option in availableOptions" :key="option" :value="option">
+        <ul class="options">
+          <li v-for="(option, i) in availableOptions" :key="option" @click="addTag(option)"
+            :class="{ active: i === activeOptionInd }">
             {{ option }}
-          </option>
-        </datalist>
+          </li>
+        </ul>
       </div>
       <div v-if="showCount" class="count">
         <span>{{ tags.length }}</span> tags
@@ -153,6 +160,32 @@ const inputElId = `tag-input${Math.random()}`
 <style scoped>
 * {
   box-sizing: border-box;
+}
+
+.options {
+  position: absolute;
+  top: 35px;
+  list-style-type: none;
+  padding: 0;
+  visibility: hidden;
+  transition: visibility 1s;
+  overflow: auto;
+}
+
+input:focus~.options {
+  visibility: visible;
+}
+
+.options li {
+  padding: 10px;
+  background: #333;
+  color: #eee;
+  cursor: pointer;
+}
+
+.options li:hover,
+.options li.active {
+  background: #555;
 }
 
 .tag-input {

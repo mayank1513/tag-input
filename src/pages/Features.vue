@@ -3,7 +3,7 @@ import { ref } from "vue";
 import TagInput from "../../lib/TagInput.vue";
 import "@mayank1513/vue-tag-input/style.css";
 
-const tags = ref<string[]>([
+const options = [
   "No dependencies",
   "Autocompletion",
   "Keep Focused",
@@ -15,7 +15,8 @@ const tags = ref<string[]>([
   "Examples",
   "Docs",
   "Copy/Paste",
-]);
+]
+const tags = ref<string[]>([...options]);
 </script>
 
 <template>
@@ -49,7 +50,7 @@ const tags = ref<string[]>([
     </p>
 
     <br />
-    <tag-input v-model="tags" />
+    <tag-input v-model="tags" :options="options" />
     <ul dir="auto">
       <li>✅ No dependencies</li>
       <li>

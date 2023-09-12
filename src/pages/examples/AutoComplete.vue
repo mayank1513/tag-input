@@ -1,19 +1,33 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import TagInput from "@mayank1513/vue-tag-input";
+import TagInput from "../../../lib/TagInput.vue";
 import "@mayank1513/vue-tag-input/style.css";
 
+const options = [
+  "No dependencies",
+  "Autocompletion",
+  "Keep Focused",
+  "Fast Settup",
+  "Mini Sized",
+  "Customizable",
+  "Backspace/Delete to remove tag",
+  "Turns red when backspace/delete is pressed",
+  "Examples",
+  "Docs",
+  "Copy/Paste",
+]
 const tags = ref<string[]>([]);
 </script>
 
 <template>
   <div class="main">
-    <h1>NPM Package test</h1>
-    <tag-input v-model="tags" />
+    <h1>Autocomplete</h1>
+    <p>Provide options for autofill but also allow custom tags</p>
+    <tag-input :options="options" v-model="tags" />
     <br />
-    <span>Use <code>enter</code> key or <code>tab</code> key to create a new
-      tag.</span>
-    <hr />
-    <hr />
+    <p>
+      Autofill options: <code v-for="(tag, i) in options"
+        :key="tag"> "{{ tag }}"{{ i === options.length - 1 ? "" : ", " }}</code>
+    </p>
   </div>
 </template>
