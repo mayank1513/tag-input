@@ -17,43 +17,26 @@ const options = ref<string[]>([
     <h1>Default options</h1>
     <tag-input v-model="tags" />
     <br />
-    <span
-      >Use <code>enter</code> key or <code>tab</code> key to create a new
-      tag.</span
-    >
+    <span>Use <code>enter</code> key or <code>tab</code> key to create a new
+      tag.</span>
     <h1>With custom delimiter and colors</h1>
-    <tag-input
-      tagBgColor="lightgreen"
-      tagTextColor="darkgreen"
-      :customDelimiter="customDelimiter"
-      v-model="tags"
-    />
+    <tag-input tagBgColor="lightgreen" tagTextColor="darkgreen" :customDelimiter="customDelimiter" v-model="tags" />
     <br />
-    <span
-      >Use <code>enter</code> key or <code>tab</code> key or any of the custom
-      delimeters to create a new tag.</span
-    >
+    <span>Use <code>enter</code> key or <code>tab</code> key or any of the custom
+      delimeters to create a new tag.</span>
     <p>
       Custom delimiters:
       <code v-for="delim in customDelimiter" :key="delim"> "{{ delim }}"</code>
     </p>
     <br />
     <h1>Do not allow custom tags</h1>
-    <tag-input
-      :options="options"
-      :allowCustom="false"
-      tagBgColor="blue"
-      tagTextColor="lightblue"
-      :customDelimiter="customDelimiter"
-      v-model="tags"
-    />
+    <tag-input :options="options" :allowCustom="false" tagBgColor="blue" tagTextColor="lightblue"
+      :customDelimiter="customDelimiter" v-model="tags" />
     <br />
     Try entering tag that is not in options and hit <code>enter</code>
     <br />
-    <span
-      >Use <code>enter</code> key or <code>tab</code> key or any of the custom
-      delimeters to create a new tag.</span
-    >
+    <span>Use <code>enter</code> key or <code>tab</code> key or any of the custom
+      delimeters to create a new tag.</span>
     <p>
       Allowed Tags: <code v-for="tag in options" :key="tag"> "{{ tag }}"</code>
     </p>
@@ -63,19 +46,11 @@ const options = ref<string[]>([
     </p>
     <br />
     <h1>Provide options for autofill but also allow custom tags</h1>
-    <tag-input
-      :options="options"
-      tagBgColor="blue"
-      tagTextColor="lightblue"
-      :customDelimiter="customDelimiter"
-      v-model="tags"
-      :showCount="true"
-    />
+    <tag-input :options="options" tagBgColor="blue" tagTextColor="lightblue" :customDelimiter="customDelimiter"
+      v-model="tags" :showCount="true" />
     <br />
-    <span
-      >Use <code>enter</code> key or <code>tab</code> key or any of the custom
-      delimeters to create a new tag.</span
-    >
+    <span>Use <code>enter</code> key or <code>tab</code> key or any of the custom
+      delimeters to create a new tag.</span>
     <p>
       Allowed Tags: <code v-for="tag in options" :key="tag"> "{{ tag }}"</code>
     </p>
@@ -91,10 +66,12 @@ const options = ref<string[]>([
 .main {
   text-align: start;
 }
+
 .logo {
   width: 70%;
   max-width: 250px;
 }
+
 .tag1 {
   background: green;
   color: red;

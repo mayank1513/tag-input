@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import { RouterView, RouterLink } from "vue-router";
+import { computed } from "vue";
+import { RouterView, RouterLink, useRoute } from "vue-router";
+
+const examples = [
+  ["Autocomplete", "autocomplete"],
+  ["Custom Delimeter", "custom-delimeter"],
+  ["Input Params", "custom-placeholder"]
+];
+const path = computed(() => useRoute().path);
 </script>
 
 <template>
@@ -9,15 +17,30 @@ import { RouterView, RouterLink } from "vue-router";
       A versatile tag input component built with Vue 3 Composition API.
       <hr />
       <p>
-        <router-link to="/">Home</router-link>
-        <router-link to="/getting-started">Getting Started</router-link>
-        <details>
-          <summary>Examples</summary>
-        </details>
+        <router-link to="/" :class="{ active: path === '/' }">Features</router-link>
+        <router-link to="/getting-started" :class="{ active: path === '/getting-started' }">Getting Started</router-link>
+      <details open>
+        <summary>Examples</summary>
+        <router-link v-for="example in examples" :to="`/examples/${example[1]}`"
+          :class="{ active: path === `/examples/${example[1]}` }">{{ example[0] }}</router-link>
+      </details>
       </p>
     </aside>
     <main>
       <router-view />
+
+      <div class="grow"></div>
+      <footer>
+        <p>
+          License:
+          <a href="https://github.com/mayank1513/tag-input/blob/master/LICENSE" target="_blank"
+            rel="noopener noreferrer">MIT</a>
+          <br />
+          <br />
+          Copyright © 2023
+          <a href="https://mayank-chaudhari.vercel.app" target="_blank">Mayank Kumar Chaudhari</a>
+        </p>
+      </footer>
     </main>
   </div>
 </template>
@@ -28,11 +51,17 @@ body {
   padding: 0;
   margin: 0;
 }
-a {
-  color: inherit;
-  display: block;
-  padding: 10px;
+
+details {
+  padding: 15px;
+
+  summary {
+    margin-left: -5px;
+    padding-bottom: 5px;
+    cursor: pointer;
+  }
 }
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -40,31 +69,77 @@ a {
   text-align: center;
   color: #2c3e50;
 }
+
 .container {
   display: flex;
   height: 100vh;
   width: 100vw;
   overflow: hidden;
 }
+
 .container aside {
-  width: 400px;
+  $w: 300px;
+  width: $w;
+  min-width: $w;
+  max-width: $w;
   background: #1e2a31;
   overflow: auto;
   padding: 10px;
   color: #b0c4cf;
   box-shadow: 0 0 5px #1e2a31;
+
+  a {
+    color: inherit;
+    display: block;
+    padding: 10px 60px;
+    text-decoration: none;
+    margin: 0 -50px;
+
+    &.active,
+    &:hover {
+      font-weight: bold;
+      background: #ff52;
+    }
+
+    &.active {
+      background: #ff55;
+    }
+  }
+
   p {
     text-align: start;
   }
 }
+
+pre {
+  padding: 10px 15px;
+  width: 900px;
+  border-radius: 5px;
+  background: #5552;
+  border: 1px solid #0005;
+  font-size: 16px;
+  font-weight: 500;
+  overflow: auto;
+}
+
 .container main {
+  display: flex;
+  flex-direction: column;
+  text-align: start;
   overflow: auto;
   flex-grow: 1;
-  padding: 10px;
+  padding: 20px 30px;
+  padding-bottom: 10px;
 }
+
+.grow {
+  flex-grow: 1;
+}
+
 @media (max-width: 600px) {
   .container {
     flex-direction: column;
+
     aside {
       height: 320px;
       overflow: hidden;
