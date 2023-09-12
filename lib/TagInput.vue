@@ -171,7 +171,6 @@ const inputElId = `tag-input${Math.random()}`
   margin: 0;
   padding: 10px;
   left: 10px;
-  max-width: 75%;
   border-bottom: 1px solid #5558;
   cursor: text;
 
