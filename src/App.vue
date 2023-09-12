@@ -5,6 +5,7 @@ import { RouterView, RouterLink, useRoute } from "vue-router";
 const examples = [
   ["Autocomplete", "autocomplete"],
   ["Custom Delimeter", "custom-delimeter"],
+  ["Input Params", "custom-placeholder"]
 ];
 const path = computed(() => useRoute().path);
 </script>

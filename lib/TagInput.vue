@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, nextTick, onMounted, computed } from "vue";
+import { ref, watch, nextTick, onMounted, computed, InputHTMLAttributes } from "vue";
 defineOptions({ name: "TagInput" });
 export interface TagInputProps {
   modelValue: string[];
@@ -10,7 +10,8 @@ export interface TagInputProps {
   tagBgColor?: string;
   tagClass?: string;
   customDelimiter?: string[] | string;
-  singleLine: boolean
+  singleLine?: boolean
+  inputProps?: InputHTMLAttributes
 }
 
 const props = withDefaults(defineProps<TagInputProps>(), {
@@ -140,7 +141,7 @@ const inputElId = `tag-input${id}`
           @keydown.prevent.tab="addTag(newTag)" @keydown.delete="deleteLastTag()" @input="addTagIfDelem(newTag)"
           @keydown.down="activeOptionInd = (activeOptionInd + 1) % availableOptions.length"
           @keydown.up="activeOptionInd = (availableOptions.length + activeOptionInd - 1) % availableOptions.length"
-          placeholder="Enter tag" @focus="focused = true" @blur="focused = false" />
+          placeholder="Enter tag" @focus="focused = true" @blur="focused = false" v-bind="inputProps" />
 
         <ul class="options">
           <li v-for="(option, i) in availableOptions" :key="option" @click="addTag(option)"

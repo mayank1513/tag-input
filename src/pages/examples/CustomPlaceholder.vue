@@ -3,19 +3,19 @@ import { ref } from "vue";
 import TagInput from "../../../lib/TagInput.vue";
 
 const tags = ref<string[]>([]);
-const delimeters = ref<string[] | string>([]);
+const placeholder = ref<string>('');
 </script>
 
 <template>
   <div class="main">
-    <h1>Custom delimiter</h1>
+    <h1>Custom placeholder</h1>
     <label for="delim">
-      Custom delimeters:
-      <input id="delim" type="text" v-model="delimeters" placeholder="Enter custom delimeters">
+      Custom placeholder:
+      <input id="delim" type="text" v-model="placeholder" placeholder="Enter custom delimeters">
     </label>
     <br />
     <br />
-    <tag-input v-model="tags" :custom-delimiter="delimeters" />
+    <tag-input v-model="tags" :input-props="{ placeholder }" />
     <br />
   </div>
 </template>
