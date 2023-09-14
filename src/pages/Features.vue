@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import TagInput from "../../lib/TagInput.vue";
+import TagInput from "@/lib/TagInput.vue";
 import "@mayank1513/vue-tag-input/style.css";
 
 const options = [

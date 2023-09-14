@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import TagInput from "../../lib/TagInput.vue";
+import TagInput from "@/lib/TagInput.vue";
 </script>
 <template>
   <div>

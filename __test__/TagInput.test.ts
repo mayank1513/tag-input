@@ -1,6 +1,6 @@
 import { describe, test, beforeEach } from "vitest";
 import { mount } from "@vue/test-utils";
-import TagInput from "../lib/TagInput.vue";
+import TagInput from "@/lib/TagInput.vue";
 
 describe.concurrent("TagInput", () => {
   let input;
