@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import TagInput from "../../lib/TagInput.vue";
+import TagInput from "@/lib/TagInput.vue";
 
 const tags = ref<string[]>([]);
 const customDelimiter = ref<string[] | string>([",", " "]);

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import TagInput from "../../../lib/TagInput.vue";
+import TagInput from "@/lib/TagInput.vue";
 
 const options = [
   "No dependencies",
