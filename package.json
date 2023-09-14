@@ -28,10 +28,12 @@
     "vue-router": "4"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.26.2",
     "@types/node": "^20.6.0",
     "@vitejs/plugin-vue": "^4.3.4",
     "@vitest/coverage-v8": "^0.34.4",
     "@vue/test-utils": "^2.4.1",
+    "changeset": "^0.2.6",
     "happy-dom": "^11.0.2",
     "typescript": "^5.2.2",
     "vite": "^4.4.9",
