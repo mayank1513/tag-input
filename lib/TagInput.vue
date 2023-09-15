@@ -4,6 +4,11 @@ defineOptions({ name: "TagInput" });
 export interface TagInputProps {
   modelValue: string[];
   options?: string[];
+  validator?: string[] | RegExp | ((tag: string) => boolean | string[]);
+  /**
+   * - if RegExp or function returning boolean is provide it will only do validation
+   * - if string[] or function returning string array is provided it will act as validator as well as supply options if not present
+   */
   allowCustom?: boolean;
   showCount?: boolean;
   tagTextColor?: string;
@@ -16,7 +21,8 @@ export interface TagInputProps {
 
 const props = withDefaults(defineProps<TagInputProps>(), {
   modelValue: () => [],
-  options: () => [],
+  options: undefined,
+  validator: undefined,
   allowCustom: true,
   showCount: false,
   tagTextColor: "white",
@@ -57,11 +63,23 @@ function handleNoMatchingTag() {
     newTag.value = v.slice(0, v.length - 1);
 }
 const addTag = (tag: string) => {
-  console.log({ tag })
   tag = tag.trim();
-  if (!tag) return; // prevent empty tag
+  if (!tag) {
+    handleNoMatchingTag()
+    return; // prevent empty tag
+  }
+  let options = props.options;
+  if (props.validator) {
+    let v: boolean | string[] | RegExp | ((tag: string) => boolean | string[]) = props.validator;
+    if (typeof v === 'function') v = v(tag);
+    if (Array.isArray(v) && options === undefined) options = v;
+    else if ((typeof v === 'boolean' && !v) || (v instanceof RegExp && !v.test(tag))) {
+      handleNoMatchingTag();
+      return;
+    }
+  }
   // only allow predefined tags when allowCustom is false
-  if (!props.allowCustom && !props.options.includes(tag)) {
+  if (!props.allowCustom && !options?.includes(tag)) {
     //   display not a valid tag
     handleNoMatchingTag();
     return;
@@ -99,8 +117,17 @@ onMounted(onTagsChange);
 
 // options
 const availableOptions = computed(() => {
-  if (!props.options) return [];
-  return props.options.filter((option) => newTag.value && !tags.value.includes(option) && option.match(new RegExp(newTag.value, 'i')));
+  if (!props.allowCustom) return [];
+  let options = props.options;
+  if (options === undefined) {
+    if (Array.isArray(props.validator)) options = props.validator;
+    else if (typeof props.validator === 'function') {
+      const v = props.validator(newTag.value);
+      if (Array.isArray(v)) options = v;
+    }
+  }
+  if (!options) return [];
+  return options.filter((option) => newTag.value && !tags.value.includes(option) && option.match(new RegExp(newTag.value, 'i')));
 });
 
 const shouldDelete = ref<boolean>(false);
