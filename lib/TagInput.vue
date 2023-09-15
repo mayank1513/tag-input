@@ -69,7 +69,7 @@ const addTag = (tag: string) => {
     return; // prevent empty tag
   }
   let options = props.options;
-  if (props.validator) {
+  if (props.validator !== undefined) {
     let v: boolean | string[] | RegExp | ((tag: string) => boolean | string[]) = props.validator;
     if (typeof v === 'function') v = v(tag);
     if (Array.isArray(v) && options === undefined) options = v;
@@ -79,7 +79,7 @@ const addTag = (tag: string) => {
     }
   }
   // only allow predefined tags when allowCustom is false
-  if (!props.allowCustom && !options?.includes(tag)) {
+  if (!props.allowCustom && options && !options.includes(tag)) {
     //   display not a valid tag
     handleNoMatchingTag();
     return;
@@ -117,7 +117,6 @@ onMounted(onTagsChange);
 
 // options
 const availableOptions = computed(() => {
-  if (!props.allowCustom) return [];
   let options = props.options;
   if (options === undefined) {
     if (Array.isArray(props.validator)) options = props.validator;
