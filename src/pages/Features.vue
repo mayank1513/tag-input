@@ -50,7 +50,7 @@ const tags = ref<string[]>([...options]);
     </p>
 
     <br />
-    <tag-input v-model="tags" :validator="() => options" />
+    <tag-input v-model="tags" :autocomplete-items="() => options" />
     <ul dir="auto">
       <li>✅ No dependencies</li>
       <li>

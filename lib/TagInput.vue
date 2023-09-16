@@ -1,35 +1,45 @@
 <script setup lang="ts">
-import { ref, watch, nextTick, onMounted, computed, InputHTMLAttributes } from "vue";
+import {
+  ref,
+  watch,
+  nextTick,
+  onMounted,
+  computed,
+  InputHTMLAttributes,
+} from "vue";
 defineOptions({ name: "TagInput" });
+type AutocompleteItemType = string; // | (object & { [key: string]: any }); TODO: WIP
 export interface TagInputProps {
   modelValue: string[];
-  options?: string[];
-  validator?: string[] | RegExp | ((tag: string) => boolean | string[]);
-  /**
-   * - if RegExp or function returning boolean is provide it will only do validation
-   * - if string[] or function returning string array is provided it will act as validator as well as supply options if not present
-   */
-  allowCustom?: boolean;
+  options?: string[] /** @deprecated replaced by `autocompleteItems` and will be removed in next major release */;
+  allowCustom?: boolean /** @deprecated replaced by `validator` and will be removed in next major release */;
+  validator?:
+  | RegExp
+  | ((tag: string, items?: AutocompleteItemType[]) => boolean)
+  | "onlyAutocompleteItems";
+  autocompleteItems?:
+  | AutocompleteItemType[]
+  | ((tag: string) => AutocompleteItemType[]);
+  autocompleteKey?: string;
   showCount?: boolean;
   tagTextColor?: string;
   tagBgColor?: string;
   tagClass?: string;
   customDelimiter?: string[] | string;
-  singleLine?: boolean
-  inputProps?: InputHTMLAttributes
+  singleLine?: boolean;
+  inputProps?: InputHTMLAttributes;
 }
 
 const props = withDefaults(defineProps<TagInputProps>(), {
   modelValue: () => [],
-  options: undefined,
-  validator: undefined,
+  autocompleteKey: "id",
   allowCustom: true,
   showCount: false,
   tagTextColor: "white",
   tagBgColor: "rgb(120, 54, 10)",
   tagClass: "",
   customDelimiter: () => [],
-  singleLine: false
+  singleLine: false,
 });
 const emit = defineEmits(["update:modelValue"]);
 // Tags
@@ -62,33 +72,52 @@ function handleNoMatchingTag() {
   if (customDelimiter.value.includes(v.charAt(v.length - 1)))
     newTag.value = v.slice(0, v.length - 1);
 }
+
+/** compute options and filtered options */
+const options = computed(() => {
+  return props.autocompleteItems
+    ? Array.isArray(props.autocompleteItems)
+      ? props.autocompleteItems
+      : props.autocompleteItems(newTag.value)
+    : props.options;
+});
+const availableOptions = computed(() => {
+  if (!options.value) return [];
+  return options.value.filter(
+    (option) =>
+      newTag.value &&
+      !tags.value.includes(option) &&
+      option.match(new RegExp(newTag.value, "i"))
+  );
+});
+
+/** add new tag */
 const addTag = (tag: string) => {
   tag = tag.trim();
+  /** prevent empty tag */
   if (!tag) {
-    handleNoMatchingTag()
-    return; // prevent empty tag
-  }
-  let options = props.options;
-  if (props.validator !== undefined) {
-    let v: boolean | string[] | RegExp | ((tag: string) => boolean | string[]) = props.validator;
-    if (typeof v === 'function') v = v(tag);
-    if (Array.isArray(v) && options === undefined) options = v;
-    else if ((typeof v === 'boolean' && !v) || (v instanceof RegExp && !v.test(tag))) {
-      handleNoMatchingTag();
-      return;
-    }
-  }
-  // only allow predefined tags when allowCustom is false
-  if (!props.allowCustom && options && !options.includes(tag)) {
-    //   display not a valid tag
     handleNoMatchingTag();
     return;
   }
+
   // return early if duplicate
   if (tags.value.includes(tag)) {
     handleDuplicate(tag);
     return;
   }
+
+  if (
+    (props.validator instanceof RegExp && !props.validator.test(tag)) ||
+    ((props.validator === "onlyAutocompleteItems" ||
+      (props.validator === undefined && !props.allowCustom)) &&
+      !options.value?.includes(tag)) ||
+    (typeof props.validator === "function" &&
+      !props.validator(tag, options.value))
+  ) {
+    handleNoMatchingTag();
+    return;
+  }
+
   tags.value.push(tag);
   newTag.value = ""; // reset newTag
   activeOptionInd.value = -1;
@@ -115,20 +144,6 @@ const onTagsChange = () => {
 watch(tags, () => nextTick(onTagsChange), { deep: true });
 onMounted(onTagsChange);
 
-// options
-const availableOptions = computed(() => {
-  let options = props.options;
-  if (options === undefined) {
-    if (Array.isArray(props.validator)) options = props.validator;
-    else if (typeof props.validator === 'function') {
-      const v = props.validator(newTag.value);
-      if (Array.isArray(v)) options = v;
-    }
-  }
-  if (!options) return [];
-  return options.filter((option) => newTag.value && !tags.value.includes(option) && option.match(new RegExp(newTag.value, 'i')));
-});
-
 const shouldDelete = ref<boolean>(false);
 let timer: NodeJS.Timeout | null = null;
 
@@ -146,7 +161,7 @@ const deleteLastTag = () => {
   }
 };
 const id = Math.random().toString(36).substring(7);
-const inputElId = `tag-input${id}`
+const inputElId = `tag-input${id}`;
 </script>
 
 <template>
