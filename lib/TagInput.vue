@@ -13,13 +13,8 @@ export interface TagInputProps {
   modelValue: string[];
   options?: string[] /** @deprecated replaced by `autocompleteItems` and will be removed in next major release */;
   allowCustom?: boolean /** @deprecated replaced by `validator` and will be removed in next major release */;
-  validator?:
-  | RegExp
-  | ((tag: string, items?: AutocompleteItemType[]) => boolean)
-  | "onlyAutocompleteItems";
-  autocompleteItems?:
-  | AutocompleteItemType[]
-  | ((tag: string) => AutocompleteItemType[] | Promise<AutocompleteItemType[]>);
+  validator?: RegExp | ((tag: string, items?: AutocompleteItemType[]) => boolean) | "onlyAutocompleteItems";
+  autocompleteItems?: AutocompleteItemType[] | ((tag: string) => AutocompleteItemType[] | Promise<AutocompleteItemType[]>);
   autocompleteKey?: string;
   showCount?: boolean;
   tagTextColor?: string;
@@ -103,7 +98,7 @@ const addTag = (tag: string) => {
     return;
   }
 
-  // return early if duplicate
+  /** return early if duplicate */
   if (tags.value.includes(tag)) {
     handleDuplicate(tag);
     return;
@@ -122,7 +117,7 @@ const addTag = (tag: string) => {
   }
 
   tags.value.push(tag);
-  newTag.value = ""; // reset newTag
+  newTag.value = "";
   activeOptionInd.value = -1;
 };
 const addTagIfDelem = (tag: string) => {
@@ -137,9 +132,6 @@ const removeTag = (index: number) => {
 // positioning and handling tag change
 const tagsUl = ref<HTMLUListElement | null>(null);
 const onTagsChange = () => {
-  tagsUl.value?.style.setProperty("--tagBgColor", props.tagBgColor);
-  tagsUl.value?.style.setProperty("--tagTextColor", props.tagTextColor);
-  // scroll to end of tags
   tagsUl.value?.scrollTo(tagsUl.value.scrollWidth, 0);
   // emit value on tags change
   emit("update:modelValue", tags.value);
@@ -169,7 +161,8 @@ const inputElId = `tag-input${id}`;
 
 <template>
   <label :for="inputElId">
-    <ul class="tags" ref="tagsUl" tabindex="0" :class="{ duplicate, focused, noMatchingTag, singleLine }">
+    <ul class="tags" ref="tagsUl" tabindex="0" :class="{ duplicate, focused, noMatchingTag, singleLine }"
+      :style="{ '--tagBgColor': tagBgColor, '--tagTextColor': tagTextColor }">
       <li v-for="(tag, index) in tags" :key="tag" :class="{
         duplicate: tag === duplicate,
         tag: tagsClass.length == 0,
@@ -188,7 +181,7 @@ const inputElId = `tag-input${id}`;
           placeholder="Enter tag" @focus="focused = true" @blur="focused = false" v-bind="inputProps" />
 
         <ul class="options">
-          <li v-for="(option, i) in availableOptions" :key="option" @click="addTag(option)"
+          <li v-for="( option, i ) in  availableOptions " :key="option" @click="addTag(option)"
             :class="{ active: i === activeOptionInd }">
             {{ option }}
           </li>

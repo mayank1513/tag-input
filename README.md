@@ -12,6 +12,7 @@ A versatile tag input component built with Vue 3 Composition API.
 - ✅ Input box stays focused - no need to re-focus the input => better UX
 - ✅ Autocompletion
 - ✅ Fast setup
+- ✅ Customize tag validator
 - ✅ Works with Vuex
 - ✅ Small size: 1.6 kB gzipped
 - ✅ Many customization options
@@ -281,9 +282,10 @@ pnpm i && npm run build
 ```
 
 ## Contribute
-### Todo
-- Update docs
 
+### Todo
+
+- Update docs
 
 ## Help us to help you more
 

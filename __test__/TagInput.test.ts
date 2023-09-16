@@ -56,7 +56,7 @@ describe.concurrent("TagInput", () => {
     input.trigger("keydown", { key: "tab" });
     expect(wrapper.props("modelValue")).toStrictEqual(["Tag1"]);
     input.trigger("keydown", { key: "delete" });
-    input.trigger("keydown", { key: "delete" }); // need to press delete / backspace twice
+    input.trigger("keydown", { key: "delete" }); // need to press delete or backspace twice
     expect(wrapper.props("modelValue")).toStrictEqual([]);
   });
 
