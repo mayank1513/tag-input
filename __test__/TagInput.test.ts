@@ -43,7 +43,7 @@ describe.concurrent("TagInput", () => {
       options: ["tag1", "tag2"],
       showCount: true,
     });
-    input.setValue("tag1");
+    await input.setValue("tag1");
     input.trigger("keydown", { key: "tab" });
     expect(wrapper.props("modelValue")).toStrictEqual(["tag1"]);
     input.setValue("NotInOption");
@@ -82,7 +82,7 @@ describe.concurrent("TagInput", () => {
       validator: "onlyAutocompleteItems",
       autocompleteItems: ["tag1", "tag2"],
     });
-    input.setValue("tag1");
+    await input.setValue("tag1");
     input.trigger("keydown", { key: "tab" });
     expect(wrapper.props("modelValue")).toStrictEqual(["tag1"]);
     input.setValue("NotInAutocompleteItems");
@@ -105,7 +105,7 @@ describe.concurrent("TagInput", () => {
       validator: (tag, options) => options.includes(tag),
       autocompleteItems: () => ["tag1", "tag2"],
     });
-    input.setValue("tag1");
+    await input.setValue("tag1");
     input.trigger("keydown", { key: "tab" });
     expect(wrapper.props("modelValue")).toStrictEqual(["tag1"]);
     input.setValue("NotInAutocompleteItems");

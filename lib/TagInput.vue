@@ -19,7 +19,7 @@ export interface TagInputProps {
   | "onlyAutocompleteItems";
   autocompleteItems?:
   | AutocompleteItemType[]
-  | ((tag: string) => AutocompleteItemType[]);
+  | ((tag: string) => AutocompleteItemType[] | Promise<AutocompleteItemType[]>);
   autocompleteKey?: string;
   showCount?: boolean;
   tagTextColor?: string;
@@ -74,13 +74,15 @@ function handleNoMatchingTag() {
 }
 
 /** compute options and filtered options */
-const options = computed(() => {
-  return props.autocompleteItems
+const options = ref<AutocompleteItemType[] | undefined>(undefined);
+watch(newTag, async () => {
+  options.value = props.autocompleteItems
     ? Array.isArray(props.autocompleteItems)
       ? props.autocompleteItems
-      : props.autocompleteItems(newTag.value)
+      : await props.autocompleteItems(newTag.value)
     : props.options;
 });
+
 const availableOptions = computed(() => {
   if (!options.value) return [];
   return options.value.filter(
@@ -93,6 +95,7 @@ const availableOptions = computed(() => {
 
 /** add new tag */
 const addTag = (tag: string) => {
+  console.log(tag, options.value, availableOptions.value)
   tag = tag.trim();
   /** prevent empty tag */
   if (!tag) {
