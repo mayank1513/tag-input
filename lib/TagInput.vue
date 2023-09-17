@@ -71,6 +71,7 @@ function handleNoMatchingTag() {
 /** compute options and filtered options */
 const options = ref<AutocompleteItemType[] | undefined>(undefined);
 watch(newTag, async () => {
+  activeOptionInd.value = -1; /** reset arrow key navigation when input changes */
   options.value = props.autocompleteItems
     ? Array.isArray(props.autocompleteItems)
       ? props.autocompleteItems
@@ -176,8 +177,8 @@ const inputElId = `tag-input${id}`;
         <input v-model="newTag" :id="inputElId" type="text" autocomplete="off"
           @keydown.enter="addTag(activeOptionInd > -1 ? availableOptions[activeOptionInd] : newTag)"
           @keydown.prevent.tab="addTag(newTag)" @keydown.delete="deleteLastTag()" @input="addTagIfDelem(newTag)"
-          @keydown.down="activeOptionInd = (activeOptionInd + 1) % availableOptions.length"
-          @keydown.up="activeOptionInd = (availableOptions.length + activeOptionInd - 1) % availableOptions.length"
+          @keydown.prevent.down="activeOptionInd = (activeOptionInd + 1) % availableOptions.length"
+          @keydown.prevent.up="activeOptionInd = (availableOptions.length + activeOptionInd - 1) % availableOptions.length"
           placeholder="Enter tag" @focus="focused = true" @blur="focused = false" v-bind="inputProps" />
 
         <ul class="options">
