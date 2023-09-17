@@ -8,12 +8,13 @@ import {
   InputHTMLAttributes,
 } from "vue";
 defineOptions({ name: "TagInput" });
-type AutocompleteItemType = string; // | (object & { [key: string]: any }); TODO: WIP
+export type AutocompleteItemType = string; // | (object & { [key: string]: any }); TODO: WIP
 export interface TagInputProps {
   modelValue: string[];
   options?: string[] /** @deprecated replaced by `autocompleteItems` and will be removed in next major release */;
   allowCustom?: boolean /** @deprecated replaced by `validator` and will be removed in next major release */;
   validator?: RegExp | ((tag: string, items?: AutocompleteItemType[]) => boolean) | "onlyAutocompleteItems";
+  validationMessage?: string;
   autocompleteItems?: AutocompleteItemType[] | ((tag: string) => AutocompleteItemType[] | Promise<AutocompleteItemType[]>);
   autocompleteKey?: string;
   showCount?: boolean;
@@ -28,6 +29,7 @@ export interface TagInputProps {
 const props = withDefaults(defineProps<TagInputProps>(), {
   modelValue: () => [],
   autocompleteKey: "id",
+  validationMessage: 'Custom tags not allowed',
   allowCustom: true,
   showCount: false,
   tagTextColor: "white",
@@ -193,7 +195,7 @@ const inputElId = `tag-input${id}`;
       </div>
     </ul>
   </label>
-  <small v-show="noMatchingTag" class="err">Custom tags not allowed</small>
+  <small v-show="noMatchingTag" class="err">{{ validationMessage }}</small>
 </template>
 
 <style scoped>
