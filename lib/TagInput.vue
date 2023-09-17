@@ -1,29 +1,42 @@
 <script setup lang="ts">
-import { ref, watch, nextTick, onMounted, computed, InputHTMLAttributes } from "vue";
+import {
+  ref,
+  watch,
+  nextTick,
+  onMounted,
+  computed,
+  InputHTMLAttributes,
+} from "vue";
 defineOptions({ name: "TagInput" });
+export type AutocompleteItemType = string; // | (object & { [key: string]: any }); TODO: WIP
 export interface TagInputProps {
   modelValue: string[];
-  options?: string[];
-  allowCustom?: boolean;
+  options?: string[] /** @deprecated replaced by `autocompleteItems` and will be removed in next major release */;
+  allowCustom?: boolean /** @deprecated replaced by `validator` and will be removed in next major release */;
+  validator?: RegExp | ((tag: string, items?: AutocompleteItemType[]) => boolean) | "onlyAutocompleteItems";
+  validationMessage?: string;
+  autocompleteItems?: AutocompleteItemType[] | ((tag: string) => AutocompleteItemType[] | Promise<AutocompleteItemType[]>);
+  autocompleteKey?: string;
   showCount?: boolean;
   tagTextColor?: string;
   tagBgColor?: string;
   tagClass?: string;
   customDelimiter?: string[] | string;
-  singleLine?: boolean
-  inputProps?: InputHTMLAttributes
+  singleLine?: boolean;
+  inputProps?: InputHTMLAttributes;
 }
 
 const props = withDefaults(defineProps<TagInputProps>(), {
   modelValue: () => [],
-  options: () => [],
+  autocompleteKey: "id",
+  validationMessage: 'Custom tags not allowed',
   allowCustom: true,
   showCount: false,
   tagTextColor: "white",
   tagBgColor: "rgb(120, 54, 10)",
   tagClass: "",
   customDelimiter: () => [],
-  singleLine: false
+  singleLine: false,
 });
 const emit = defineEmits(["update:modelValue"]);
 // Tags
@@ -56,23 +69,58 @@ function handleNoMatchingTag() {
   if (customDelimiter.value.includes(v.charAt(v.length - 1)))
     newTag.value = v.slice(0, v.length - 1);
 }
+
+/** compute options and filtered options */
+const options = ref<AutocompleteItemType[] | undefined>(undefined);
+watch(newTag, async () => {
+  activeOptionInd.value = -1; /** reset arrow key navigation when input changes */
+  options.value = props.autocompleteItems
+    ? Array.isArray(props.autocompleteItems)
+      ? props.autocompleteItems
+      : await props.autocompleteItems(newTag.value)
+    : props.options;
+});
+
+const availableOptions = computed(() => {
+  if (!options.value) return [];
+  return options.value.filter(
+    (option) =>
+      newTag.value &&
+      !tags.value.includes(option) &&
+      option.match(new RegExp(newTag.value, "i"))
+  );
+});
+
+/** add new tag */
 const addTag = (tag: string) => {
-  console.log({ tag })
+  console.log(tag, options.value, availableOptions.value)
   tag = tag.trim();
-  if (!tag) return; // prevent empty tag
-  // only allow predefined tags when allowCustom is false
-  if (!props.allowCustom && !props.options.includes(tag)) {
-    //   display not a valid tag
+  /** prevent empty tag */
+  if (!tag) {
     handleNoMatchingTag();
     return;
   }
-  // return early if duplicate
+
+  /** return early if duplicate */
   if (tags.value.includes(tag)) {
     handleDuplicate(tag);
     return;
   }
+
+  if (
+    (props.validator instanceof RegExp && !props.validator.test(tag)) ||
+    ((props.validator === "onlyAutocompleteItems" ||
+      (props.validator === undefined && !props.allowCustom)) &&
+      !options.value?.includes(tag)) ||
+    (typeof props.validator === "function" &&
+      !props.validator(tag, options.value))
+  ) {
+    handleNoMatchingTag();
+    return;
+  }
+
   tags.value.push(tag);
-  newTag.value = ""; // reset newTag
+  newTag.value = "";
   activeOptionInd.value = -1;
 };
 const addTagIfDelem = (tag: string) => {
@@ -87,21 +135,12 @@ const removeTag = (index: number) => {
 // positioning and handling tag change
 const tagsUl = ref<HTMLUListElement | null>(null);
 const onTagsChange = () => {
-  tagsUl.value?.style.setProperty("--tagBgColor", props.tagBgColor);
-  tagsUl.value?.style.setProperty("--tagTextColor", props.tagTextColor);
-  // scroll to end of tags
   tagsUl.value?.scrollTo(tagsUl.value.scrollWidth, 0);
   // emit value on tags change
   emit("update:modelValue", tags.value);
 };
 watch(tags, () => nextTick(onTagsChange), { deep: true });
 onMounted(onTagsChange);
-
-// options
-const availableOptions = computed(() => {
-  if (!props.options) return [];
-  return props.options.filter((option) => newTag.value && !tags.value.includes(option) && option.match(new RegExp(newTag.value, 'i')));
-});
 
 const shouldDelete = ref<boolean>(false);
 let timer: NodeJS.Timeout | null = null;
@@ -120,12 +159,13 @@ const deleteLastTag = () => {
   }
 };
 const id = Math.random().toString(36).substring(7);
-const inputElId = `tag-input${id}`
+const inputElId = `tag-input${id}`;
 </script>
 
 <template>
   <label :for="inputElId">
-    <ul class="tags" ref="tagsUl" tabindex="0" :class="{ duplicate, focused, noMatchingTag, singleLine }">
+    <ul class="tags" ref="tagsUl" tabindex="0" :class="{ duplicate, focused, noMatchingTag, singleLine }"
+      :style="{ '--tagBgColor': tagBgColor, '--tagTextColor': tagTextColor }">
       <li v-for="(tag, index) in tags" :key="tag" :class="{
         duplicate: tag === duplicate,
         tag: tagsClass.length == 0,
@@ -139,12 +179,12 @@ const inputElId = `tag-input${id}`
         <input v-model="newTag" :id="inputElId" type="text" autocomplete="off"
           @keydown.enter="addTag(activeOptionInd > -1 ? availableOptions[activeOptionInd] : newTag)"
           @keydown.prevent.tab="addTag(newTag)" @keydown.delete="deleteLastTag()" @input="addTagIfDelem(newTag)"
-          @keydown.down="activeOptionInd = (activeOptionInd + 1) % availableOptions.length"
-          @keydown.up="activeOptionInd = (availableOptions.length + activeOptionInd - 1) % availableOptions.length"
+          @keydown.prevent.down="activeOptionInd = (activeOptionInd + 1) % availableOptions.length"
+          @keydown.prevent.up="activeOptionInd = (availableOptions.length + activeOptionInd - 1) % availableOptions.length"
           placeholder="Enter tag" @focus="focused = true" @blur="focused = false" v-bind="inputProps" />
 
         <ul class="options">
-          <li v-for="(option, i) in availableOptions" :key="option" @click="addTag(option)"
+          <li v-for="( option, i ) in  availableOptions " :key="option" @click="addTag(option)"
             :class="{ active: i === activeOptionInd }">
             {{ option }}
           </li>
@@ -155,7 +195,7 @@ const inputElId = `tag-input${id}`
       </div>
     </ul>
   </label>
-  <small v-show="noMatchingTag" class="err">Custom tags not allowed</small>
+  <small v-show="noMatchingTag" class="err">{{ validationMessage }}</small>
 </template>
 
 <style scoped>

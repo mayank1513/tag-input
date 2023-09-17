@@ -11,13 +11,16 @@ A versatile tag input component built with Vue 3 Composition API.
 - ✅ No dependencies
 - ✅ Input box stays focused - no need to re-focus the input => better UX
 - ✅ Autocompletion
+- ✅ Use arrow keys to navigate and enter key to select autocomplete options
 - ✅ Fast setup
+- ✅ Customize tag validator
 - ✅ Works with Vuex
 - ✅ Small size: 1.6 kB gzipped
 - ✅ Many customization options
 - ✅ Delete tags on backspace / delete key
 - ✅ Confirm before delete - tags turns red when backspace is pressed, gets deleted when backspace is pressed again
 - ✅ Works well with copy & paste
+- ✅ Excellent UX and accessibility
 - ✅ Examples & Docs
 
 Please read [this article](https://mayank1513.medium.com/creating-a-tag-input-component-using-the-vue-3-composition-api-feae06d58492) to learn how to build this package step by step and the background story.
@@ -279,6 +282,12 @@ npm i && npm run build
 // or
 pnpm i && npm run build
 ```
+
+## Contribute
+
+### Todo
+
+- Update docs
 
 ## Help us to help you more
 
