@@ -4,6 +4,7 @@ import { RouterView, RouterLink, useRoute } from "vue-router";
 
 const examples = [
   ["Autocomplete", "autocomplete"],
+  ["Autocomplete with API", "autocomplete-with-api"],
   ["Custom Delimeter", "custom-delimeter"],
   ["Input Params", "custom-placeholder"]
 ];
