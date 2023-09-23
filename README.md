@@ -11,7 +11,7 @@ A versatile tag input component built with Vue 3 Composition API.
 - ✅ No dependencies
 - ✅ Input box stays focused - no need to re-focus the input => better UX
 - ✅ Autocompletion
-- ✅ Use arrow keys to navigate and enter key to select autocomplete options
+- ✅ Use arrow keys to navigate and enter key to select autocompleteItems
 - ✅ Fast setup
 - ✅ Customize tag validator
 - ✅ Works with Vuex
@@ -93,6 +93,8 @@ export default {
 }
 </script>
 ```
+
+Detailed Docs available at (https://vue-tag-input.vercel.app)[https://vue-tag-input.vercel.app]
 
 ### cdn
 
@@ -203,15 +205,16 @@ basic usage
         <br />
         <h1>Do not allow custom tags</h1>
         <tag-input
-          :options="options"
-          :allowCustom="false"
+          :autocomplete-items="autocompleteItems"
+          validator="onlyAutocompleteItems"
           tagBgColor="blue"
           tagTextColor="lightblue"
           :customDelimiter="customDelimiter"
           v-model="tags"
         />
         <br />
-        Try entering tag that is not in options and hit <code>enter</code>
+        Try entering tag that is not in autocompleteItems and hit
+        <code>enter</code>
         <br />
         <span
           >Use <code>enter</code> key or <code>tab</code> key or any of the
@@ -219,7 +222,7 @@ basic usage
         >
         <p>
           Allowed Tags:
-          <code v-for="tag in options" :key="tag"> "{{tag}}"</code>
+          <code v-for="tag in autocompleteItems" :key="tag"> "{{tag}}"</code>
         </p>
         <p>
           Custom delimiters:
@@ -228,9 +231,11 @@ basic usage
           >
         </p>
         <br />
-        <h1>Provide options for autofill but also allow custom tags</h1>
+        <h1>
+          Provide autocompleteItems for autofill but also allow custom tags
+        </h1>
         <tag-input
-          :options="options"
+          :autocomplete-items="autocompleteItems"
           tagBgColor="blue"
           tagTextColor="lightblue"
           :customDelimiter="customDelimiter"
@@ -243,7 +248,7 @@ basic usage
         >
         <p>
           Allowed Tags:
-          <code v-for="tag in options" :key="tag"> "{{tag}}"</code>
+          <code v-for="tag in autocompleteItems" :key="tag"> "{{tag}}"</code>
         </p>
         <p>
           Custom delimiters:
@@ -261,7 +266,13 @@ basic usage
           return {
             tags: [],
             customDelimiter: [",", " "],
-            options: ["vue", "composition", "js", "mytag1", "mayank1513"],
+            autocompleteItems: [
+              "vue",
+              "composition",
+              "js",
+              "mytag1",
+              "mayank1513",
+            ],
           };
         },
         components: {

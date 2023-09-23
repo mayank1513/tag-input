@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 import { RouterView, RouterLink, useRoute } from "vue-router";
 
 const examples = [
@@ -9,7 +9,24 @@ const examples = [
   ["Custom Delimeter", "custom-delimeter"],
   ["Input Params", "custom-placeholder"]
 ];
-const path = computed(() => useRoute().path);
+const route = useRoute();
+const path = computed(() => route.path);
+onMounted(() => {
+  window.addEventListener('click', e => {
+    // @ts-ignore 
+    if (e.target?.tagName === "PRE") {
+      // @ts-ignore
+      navigator.clipboard.writeText(e.target.innerText);
+      // @ts-ignore
+      e.target.classList.add('copied')
+      setTimeout(() => {
+        // @ts-ignore
+        e.target.classList.remove('copied')
+      }, 2000);
+    }
+  });
+
+})
 </script>
 
 <template>
@@ -114,6 +131,7 @@ details {
 }
 
 pre {
+  position: relative;
   padding: 10px 15px;
   width: 900px;
   border-radius: 5px;
@@ -122,6 +140,21 @@ pre {
   font-size: 16px;
   font-weight: 500;
   overflow: auto;
+  pointer-events: none;
+
+  &::after {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    content: "🗒";
+    cursor: pointer;
+    padding: 10px;
+    pointer-events: all;
+  }
+
+  &.copied::after {
+    content: "✅";
+  }
 }
 
 .container main {
