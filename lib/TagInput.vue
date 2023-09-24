@@ -29,7 +29,7 @@ export interface TagInputProps {
 const props = withDefaults(defineProps<TagInputProps>(), {
   modelValue: () => [],
   autocompleteKey: "id",
-  validationMessage: 'Custom tags not allowed',
+  validationMessage: 'Invalid tag: custom tags not allowed',
   allowCustom: true,
   showCount: false,
   tagTextColor: "white",

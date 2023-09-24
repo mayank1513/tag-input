@@ -43,6 +43,7 @@ onMounted(() => {
         <router-link v-for="example in examples" :to="`/examples/${example[1]}`"
           :class="{ active: path === `/examples/${example[1]}` }">{{ example[0] }}</router-link>
       </details>
+      <router-link to="/docs">Docs</router-link>
       </p>
     </aside>
     <main>
